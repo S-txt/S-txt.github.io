@@ -131,7 +131,7 @@ window.addEventListener('load',function (){
         constructor(game, row) {
             this.game = game;
             this.width = game.width/4;
-            this.height = game.width/4;
+            this.height = this.width;
             this.image = document.getElementById('tile')
             this.speed = 0;
             this.maxSpeed = 8;
@@ -217,7 +217,7 @@ window.addEventListener('load',function (){
             this.key = undefined;
             this.input = new InputHandler(this);
             this.player = new Player(this)
-            this.bottomMargin = 500;
+            this.bottomMargin = height * 0.39;
             // this.numberOfTiles = 2;
             this.tiles = []
             this.tileTimer = 0;
@@ -230,7 +230,7 @@ window.addEventListener('load',function (){
 
         }
         render(context, deltaTime){
-            context.drawImage(this.streetBg, 0,0,this.height/1.5, this.width/2)
+            //context.drawImage(this.streetBg, 0,0, this.width, this.height*0.39)
             this.player.draw(context);
             this.player.update(deltaTime);
             handlerTiles(this, deltaTime);
