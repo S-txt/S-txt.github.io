@@ -5,8 +5,7 @@
 }
 #wrapper{
     /*border: 5px solid black;*/
-    width: 100vw;
-    height: 100vh;
+    max-width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
