@@ -39,8 +39,8 @@ window.addEventListener('load',function (){
             this.maxFrame = 6;
             this.width = this.SpriteWidth;
             this.height = this.SpriteHeight;
-            this.x = 50;
-            this.y = 200;
+            this.x = 10;
+            this.y = this.SpriteHeight;
             this.speed = 0;
             this.maxSpeed = 5;
             this.image = document.getElementById('player');
@@ -81,10 +81,8 @@ window.addEventListener('load',function (){
             } else if (this.game.key == 'RArrowLeft'){
                 this.setSpeed(0);
                 this.frameY = 0
-            } else if (this.game.key == 'PArrowUp'){
+            } else if (this.game.key == 'PArrowUp' || this.game.lastScore == "perfect"){
                 this.frameY = 2
-            } else if (this.game.key == 'RArrowUp'){
-                this.frameY = 0
             } else {
                 this.setSpeed(0);
             }
@@ -108,20 +106,29 @@ window.addEventListener('load',function (){
                 // fixing not eq frames
                 if (this.frameY == 2){
                     this.maxFrame = 5;
+                    if (this.frameX >= this.maxFrame){
+                        this.frameX = 0;
+                    } else {
+                        this.frameX ++;
+                    }
+                    this.frameTimer = 0;
+
                 } else {
                     this.maxFrame = 6;
+                    if (this.frameX >= this.maxFrame){
+                        this.frameX = 0;
+                    } else {
+                        this.frameX ++;
+                    }
+                    this.frameTimer = 0;
                 }
 
-                if (this.frameX >= this.maxFrame){
-                    this.frameX = 0;
-                } else {
-                    this.frameX ++;
-                }
-                this.frameTimer = 0;
+
 
             } else {
                 this.frameTimer += deltaTime
             }
+
 
 
         }
@@ -163,10 +170,11 @@ window.addEventListener('load',function (){
             // }
             this.setSpeed(this.maxSpeed);
             this.y += this.speed;
-            if ((this.y > this.game.width + this.game.bottomMargin + this.width ) ||
+            if ((this.y > this.game.width + this.game.bottomMargin + this.width / 2 ) ||
                     ((this.x <= this.game.touchX && this.game.touchX <= this.x + this.width) &&
                     (this.y <= this.game.touchY && this.game.touchY <= this.y + this.height))){
                 this.markedForDelition = true
+                game.lastScore = "miss"
             }
 
         }
@@ -192,6 +200,7 @@ window.addEventListener('load',function (){
         //if (game.tiles.filter(tile => tile.markedForDelition).length > 0){
             if (game.touchY >= game.height - 180){
                 game.lastScore = "perfect"
+
             } else if (game.touchY >= game.height - 250){
                 game.lastScore = "good"
             } else {
