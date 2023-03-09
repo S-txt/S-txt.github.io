@@ -16,6 +16,7 @@ window.addEventListener('load',function (){
             window.addEventListener('touchstart', e => {
                 this.game.touchY = e.changedTouches[0].pageY
                 this.game.touchX = e.changedTouches[0].pageX
+                this.game.key = 'touchstart'
             })
             window.addEventListener('touchmove', e => {
                 //console.log(e)
@@ -24,6 +25,7 @@ window.addEventListener('load',function (){
                 getScore(this.game)
                 this.game.touchY = -1
                 this.game.touchX = -1
+                this.game.key = 'touchend'
 
             })
         }
@@ -81,10 +83,12 @@ window.addEventListener('load',function (){
             } else if (this.game.key == 'RArrowLeft'){
                 this.setSpeed(0);
                 this.frameY = 0
-            } else if (this.game.key == 'PArrowUp' || this.game.lastScore == "perfect"){
-                this.frameY = 2
-            } else {
+            } //else if (this.game.key == 'touchstart' && this.game.lastScore == "perfect" ){
+            //    this.frameY = 2
+            //}
+            else {
                 this.setSpeed(0);
+                this.frameY = 0
             }
             this.x += this.speed
 
@@ -106,31 +110,18 @@ window.addEventListener('load',function (){
                 // fixing not eq frames
                 if (this.frameY == 2){
                     this.maxFrame = 5;
-                    if (this.frameX >= this.maxFrame){
-                        this.frameX = 0;
-                    } else {
-                        this.frameX ++;
-                    }
-                    this.frameTimer = 0;
-
                 } else {
                     this.maxFrame = 6;
-                    if (this.frameX >= this.maxFrame){
-                        this.frameX = 0;
-                    } else {
-                        this.frameX ++;
-                    }
-                    this.frameTimer = 0;
                 }
-
-
-
+                if (this.frameX >= this.maxFrame){
+                    this.frameX = 0;
+                } else {
+                    this.frameX ++;
+                }
+                this.frameTimer = 0;
             } else {
                 this.frameTimer += deltaTime
             }
-
-
-
         }
     }
 
@@ -165,9 +156,6 @@ window.addEventListener('load',function (){
         }
 
         update(ctx, deltaTime){
-            // if (this.game.key == 'PEnter') {
-            //     this.setSpeed(this.maxSpeed);
-            // }
             this.setSpeed(this.maxSpeed);
             this.y += this.speed;
             if ((this.y > this.game.width + this.game.bottomMargin + this.width / 2 ) ||
