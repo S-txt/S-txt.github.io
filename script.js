@@ -1,8 +1,8 @@
 window.addEventListener('load',function (){
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 720;
-    canvas.height = 1280;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     class InputHandler {
         constructor(game) {
@@ -130,8 +130,8 @@ window.addEventListener('load',function (){
     class Tile{
         constructor(game, row) {
             this.game = game;
-            this.width = 180;
-            this.height = 180;
+            this.width = game.width/4;
+            this.height = game.width/4;
             this.image = document.getElementById('tile')
             this.speed = 0;
             this.maxSpeed = 8;
