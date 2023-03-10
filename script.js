@@ -41,7 +41,7 @@ window.addEventListener('load',function (){
             this.width = this.SpriteWidth;
             this.height = this.SpriteHeight;
             this.x = 10;
-            this.y = this.SpriteHeight;
+            this.y = this.game.bottomMargin - this.height ;
             this.speed = 0;
             this.maxSpeed = 5;
             this.image = document.getElementById('player');
@@ -198,7 +198,7 @@ window.addEventListener('load',function (){
                 // abstract player hp - 1
             }
             game.score += game.deltaScore
-            console.log('deltaScore: ' + game.deltaScore)
+            //console.log('deltaScore: ' + game.deltaScore)
         }
 
     }
@@ -220,10 +220,9 @@ window.addEventListener('load',function (){
             this.width = width;
             this.height = height;
             this.key = undefined;
+            this.bottomMargin = this.height * 0.39;
             this.input = new InputHandler(this);
             this.player = new Player(this)
-            this.bottomMargin = height * 0.39;
-            // this.numberOfTiles = 2;
             this.tiles = []
             this.tileTimer = 0;
             this.tileInterval = 200;
@@ -237,7 +236,7 @@ window.addEventListener('load',function (){
 
         }
         render(context, deltaTime){
-            //context.drawImage(this.streetBg, 0,0, this.width, this.height*0.39)
+            context.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
             this.player.draw(context);
             this.player.update(deltaTime);
             handlerTiles(this, deltaTime);
