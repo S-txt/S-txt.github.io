@@ -38,6 +38,6 @@ canvas {
 }
 
 
-#player, #tile, #street {
+#player, #tile, #street, #road {
     display: none;
 }

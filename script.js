@@ -230,12 +230,14 @@ window.addEventListener('load',function (){
             this.touchX = -1;
             this.touchY = -1;
             this.streetBg = document.getElementById('street')
+            this.roadBg = document.getElementById('road')
             this.lastScore = '';
             this.deltaScore = -1;
             this.score = 0;
 
         }
         render(context, deltaTime){
+            context.drawImage(this.roadBg, 0,this.bottomMargin, this.width, this.height-this.bottomMargin)
             context.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
             this.player.draw(context);
             this.player.update(deltaTime);
