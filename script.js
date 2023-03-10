@@ -22,7 +22,6 @@ window.addEventListener('load',function (){
                 //console.log(e)
             })
             window.addEventListener('touchend', e => {
-                getScore(this.game)
                 this.game.touchY = -1
                 this.game.touchX = -1
                 this.game.key = 'touchend'
@@ -53,7 +52,6 @@ window.addEventListener('load',function (){
         }
         draw(context){
             // context.fillRect(this.x, this.y, this.width, this.height);
-
             context.drawImage(this.image,
                 this.frameX * this.SpriteWidth,
                 this.frameY * this.SpriteHeight,
@@ -71,6 +69,7 @@ window.addEventListener('load',function (){
         }
 
         update(deltaTime){
+            // animation & speed controls
             if (this.game.key == 'PArrowRight') {
                 this.setSpeed(this.maxSpeed);
                 this.frameY = 1;
@@ -83,13 +82,11 @@ window.addEventListener('load',function (){
             } else if (this.game.key == 'RArrowLeft'){
                 this.setSpeed(0);
                 this.frameY = 0
-            } //else if (this.game.key == 'touchstart' && this.game.lastScore == "perfect" ){
-            //    this.frameY = 2
-            //}
-            else {
+            } else {
                 this.setSpeed(0);
                 this.frameY = 0
             }
+
             this.x += this.speed
 
             // horizontal boundaries
@@ -133,9 +130,6 @@ window.addEventListener('load',function (){
             this.image = document.getElementById('tile')
             this.speed = 0;
             this.maxSpeed = 8;
-            this.fps = 15;
-            this.frameInterval = 1000/this.fps;
-            this.frameTimer = 0;
             this.x = row * this.width;
             this.y = this.game.bottomMargin - this.width / 2;
             this.markedForDelition = false;
@@ -162,7 +156,7 @@ window.addEventListener('load',function (){
                     ((this.x <= this.game.touchX && this.game.touchX <= this.x + this.width) &&
                     (this.y <= this.game.touchY && this.game.touchY <= this.y + this.height))){
                 this.markedForDelition = true
-                game.lastScore = "miss"
+                //game.lastScore = "miss"
             }
 
         }
@@ -178,32 +172,46 @@ window.addEventListener('load',function (){
             game.tileTimer += deltaTime
         }
         game.tiles.forEach(tile => {
-            tile.draw(ctx)
-            tile.update(ctx,deltaTime)
+            tile.draw(ctx);
+            tile.update(ctx,deltaTime);
+            getScore(game, tile);
             })
             displayText(game,ctx)
         game.tiles = game.tiles.filter(tile => !tile.markedForDelition);
     }
-    function getScore(game){
-        //if (game.tiles.filter(tile => tile.markedForDelition).length > 0){
-            if (game.touchY >= game.height - 180){
+    function getScore(game, tile){
+        if (tile.x <= game.touchX &&
+            game.touchX <= tile.x + tile.width &&
+            game.touchY - tile.y <= tile.height){
+            if (game.height - tile.height <= game.touchY){
+                game.deltaScore = 50
                 game.lastScore = "perfect"
-
-            } else if (game.touchY >= game.height - 250){
+            } else if (game.height - tile.height * 1.25 <= game.touchY){
+                game.deltaScore = 25
                 game.lastScore = "good"
-            } else {
+            } else if (game.height - tile.height * 1.5 <= game.touchY){
+                game.deltaScore = 10
                 game.lastScore = "bad"
+            } else {
+                game.deltaScore = 0
+                game.lastScore = "miss"
+                // abstract player hp - 1
             }
-            console.log(game.lastScore)
-        //}
+            game.score += game.deltaScore
+            console.log('deltaScore: ' + game.deltaScore)
+        }
 
     }
     function displayText(game, context){
         context.fillStyle = 'grey';
-        context.font = '60px Comics Sans';
-        context.fillText(game.lastScore, game.width/2.5, game.height/2)
+        context.font = '16px Comics Sans';
+        context.fillText(game.score, 30,  30)
+        context.font = '30px Comics Sans';
+        context.fillText(game.lastScore , game.width/2.5, game.height/2)
         context.fillStyle = 'white';
-        context.font = '60px Comics Sans';
+        context.font = '16px Comics Sans';
+        context.fillText(game.score, 30, 30)
+        context.font = '30px Comics Sans';
         context.fillText(game.lastScore, game.width/2.5+2, game.height/2+2)
     }
 
@@ -220,10 +228,12 @@ window.addEventListener('load',function (){
             this.tileTimer = 0;
             this.tileInterval = 200;
             this.randomTileInterval = Math.random() * this.tileInterval + 500;
-            this.touchX = 0;
-            this.touchY = 0;
+            this.touchX = -1;
+            this.touchY = -1;
             this.streetBg = document.getElementById('street')
-            this.lastScore='';
+            this.lastScore = '';
+            this.deltaScore = -1;
+            this.score = 0;
 
         }
         render(context, deltaTime){
