@@ -22,20 +22,21 @@ body{
 
 canvas {
     background: lightblue;
-    width: 100%;
-    height: 100%;
-}
-#wrapper::after {
-    content: "";
     display: block;
     width: 100%;
-    height: 180px;
-    position: absolute;
-    top: calc(100% - 1vw /4);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-top: 5px solid grey;
+    height: 100vh;
 }
+/*#wrapper::after {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    height: 180px;*/
+/*    position: absolute;*/
+/*    top: calc(100% - 1vw /4);*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*    border-top: 5px solid grey;*/
+/*}*/
 
 
 #player, #tile, #street, #road {
