@@ -19,6 +19,8 @@ window.addEventListener('load',function (){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    // ctx.draw(123)
+
     class Game {
         constructor(width, height) {
             this.width = width;

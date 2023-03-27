@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'PressStart2P';
+    src: url('../fonts/PressStart2P-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Nineteen';
+    src: url('../fonts/NineteenEightySeven-MzMJ.ttf') format('truetype');
+  }
+
 *{
     margin: 0;
     padding: 0;
@@ -5,17 +15,19 @@
     overflow: hidden;
 }
 body{
+    /* font-family: 'PressStart2P', sans-serif; */
+    color: #dadada;
     position: relative;
     background-color: #333;
 }
 
 h1 {
     position: absolute;
-    top: 50%;
+    top: 5px;
     left: 50%;
     z-index: 10;
-    font-size: 10vw;
-    color: brown;
+    font-size: 25px;
+    color: white;
 }
 
 #wrapper{
