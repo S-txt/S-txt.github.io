@@ -5,14 +5,10 @@ import { InputHandler } from "./input.js";
 window.addEventListener('load',function (){
 
     const params = new URL(document.location).searchParams;
-    const q = params.get("id") + ' ' + params.get("username");
 
-    const param = document.createElement('h1');
-    param.textContent = q
+    document.querySelector('.username').textContent = params.get('username')
 
-    document.body.appendChild(param)
-
-    console.log(param)
+    console.log(params.get("id"), params.get("username"))
 
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
