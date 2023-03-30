@@ -3,13 +3,26 @@ const states = {
     RUN: 1,
     ATTACK: 2,
     HIT: 3,
+    DEATH: 4,
 }
 
 class State {
     constructor(state) {
         this.state = state;
+        // this.idleFrames = 0;
+        // this.runFrames = 0;
+        // this.attackFrames = 0;
+        // this.hitFrames = 0;
+        // this.deathFrames = 0;
     }
 
+    // setFrames(idleFrames, runFrames, attackFrames, hitFrames, deathFrames){
+    //     this.idleFrames = idleFrames;
+    //     this.runFrames = runFrames;
+    //     this.attackFrames = attackFrames;
+    //     this.hitFrames = hitFrames;
+    //     this.deathFrames = deathFrames;
+    // }
 }
 
 export  class Idle extends State{
@@ -25,9 +38,10 @@ export  class Idle extends State{
     }
     // tracking to change state
     handleState(game){
-        if  (game.score >= 500){
-            this.player.setState(states.RUN)
-        } else if (game.lastScore == 'miss'){
+        // if  (game.score >= 500){
+        //     //this.player.setState(states.RUN)
+        // } else
+        if (game.lastScore == 'miss'){
             this.player.setState(states.HIT)
         } else if(['perfect'].includes(game.lastScore)){
                 this.player.setState(states.ATTACK)
@@ -64,9 +78,11 @@ export  class Attack extends State{
         this.player.maxFrame = 5;
     }
     // tracking to change state
-    handleState(){
+    handleState(game){
         if (this.player.frameX >= this.player.maxFrame){
             this.player.game.lastScore = "perfect "
+            //game.enemies[0].setState(states.HIT)
+
             this.player.setState(states.IDLE)
         }
     }
@@ -84,6 +100,7 @@ export  class Hit extends State{
     }
     // tracking to change state
     handleState(){
+
         if (this.player.frameX >= this.player.maxFrame){
             this.player.setState(states.IDLE)
 

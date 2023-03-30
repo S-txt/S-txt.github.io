@@ -2,7 +2,7 @@ import {HP} from './hp.js';
 import {Idle, Run, Attack, Hit} from "./playerStates.js";
 
 export class Player {
-    constructor(game){
+    constructor(game, maxSpeed){
         this.game = game;
         this.SpriteWidth = 183;
         this.SpriteHeight = 146;
@@ -14,7 +14,7 @@ export class Player {
         this.x = 10;
         this.y = this.game.bottomMargin - this.height ;
         this.speed = 0;
-        this.maxSpeed = 3;
+        this.maxSpeed = maxSpeed;
         this.image = document.getElementById('player');
 
         this.fps = 15;
@@ -23,7 +23,7 @@ export class Player {
 
         this.playerHealth = new HP(this.game);
         this.playerAlive = true;
-
+        // TODO add state death
         this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this)];
         this.currentState = this.states[0];
         this.currentState.enter()
@@ -31,7 +31,10 @@ export class Player {
     }
 
     draw(context){
-        // context.fillRect(this.x, this.y, this.width, this.height);
+        context.fillStyle = "lime";
+        context.globalAlpha = 0.5;
+        context.fillRect(this.x, this.y, this.width, this.height);
+        context.globalAlpha = 1;
         context.drawImage(this.image,
             this.frameX * this.SpriteWidth,
             this.frameY * this.SpriteHeight,
@@ -55,24 +58,6 @@ export class Player {
             this.game.gameEnd = true;
         }
         this.currentState.handleState(this.game)
-        // animation & speed controls
-        // if (this.game.key == 'PArrowRight') {
-        //     this.setSpeed(this.maxSpeed);
-        //     this.frameY = 1;
-        // } else if (this.game.key == 'RArrowRight'){
-        //     this.setSpeed(0);
-        //     this.frameY = 0
-        // } else if (this.game.key == 'PArrowLeft'){
-        //     this.setSpeed(-this.maxSpeed);
-        //     this.frameY = 1;
-        // } else if (this.game.key == 'RArrowLeft'){
-        //     this.setSpeed(0);
-        //     this.frameY = 0
-        // } else {
-        //     this.setSpeed(0);
-        //     this.frameY = 0
-        // }
-
         this.x += this.speed
 
         // horizontal boundaries
@@ -100,7 +85,6 @@ export class Player {
         } else {
             this.frameTimer += deltaTime
         }
-
     }
 
     setState(state){
