@@ -1,27 +1,15 @@
 const buildBaseRegions = () => {
     document.title = 'Regions'
 
-    document.body.innerHTML = ''
+    document.body.innerHTML = `
+        <div class="username"></div>
 
-    const username = document.createElement('div')
-    username.classList.add('username')
+        <div class="region-section">
+            <h1 class="region-main-header">Choose a region!</h1>
 
-    document.body.appendChild(username)
-
-    const regionSection = document.createElement('div');
-    regionSection.classList.add('region-section');
-
-    const header = document.createElement('h1');
-    header.classList.add('region-main-header');
-    header.textContent = 'Choose a region!';
-    regionSection.appendChild(header)
-
-    const regionList = document.createElement('ul')
-    regionList.classList.add("region-list")
-
-    regionSection.appendChild(regionList)
-
-    document.body.appendChild(regionSection);
+            <ul class="region-list"></ul>
+        </div>
+    `
 }
 
 const buildRegions = (regions) => {

@@ -1,62 +1,33 @@
 const buildBaseLeaderBoard = () => {
     document.title = 'LeaderBoard'
 
-    document.body.innerHTML = ''
+    document.body.innerHTML = `
+    <div class="leaderBoard">
+        <h1 class="leaderBoardHeader">Leader Board</h1>
 
-    const leaderBoard = document.createElement('div');
-    leaderBoard.classList.add('leaderBoard');
+        <div class="btn-group">
+            <input type="radio" class="stv-radio-button" name="radiobuttonTest" id="button1" value="1">
+            <label for="button1" id="globalButton">global</label>
+            
+            <input type="radio" class="stv-radio-button" name="radiobuttonTest" id="button2" value="2" checked>
+            <label for="button2" id="regionButton">region</label>
 
-    const header = document.createElement('h1');
-    header.classList.add('leaderBoardHeader');
-    header.textContent = 'Leader Board';
-    leaderBoard.appendChild(header)
+            <input type="radio" class="stv-radio-button" name="radiobuttonTest" id="button3" value="3">
+            <label for="button3" id="friendsButton">friends</label>
+        </div>
 
-    const btnGroup = document.createElement('div');
-    btnGroup.classList.add('btn-group');
+        <ul class="leaderList"></ul>
 
-    const labels = ['global', 'region', 'friends']
+        <div class="exit-section"><button class="exit">Назад</button></div>
 
-    for (let i=1; i<4; i++) {
-        let input = document.createElement('input')
-        input.setAttribute("type", "radio")
-        input.setAttribute("value", `${i}`)
-        input.setAttribute("id", `button${i}`)
-        input.setAttribute("name", "radioButtonTest")
-        input.classList.add("stv-radio-button")
-
-        if (i === 2) {
-            input.setAttribute('checked', '')
-        }
-
-        btnGroup.appendChild(input);
-
-        let label = document.createElement('label')
-        label.setAttribute('for', `button${i}`)
-        label.setAttribute('id', `${labels[i-1]}Button`)
-        label.textContent = labels[i-1]
-
-        btnGroup.appendChild(label);
-    }
-    leaderBoard.appendChild(btnGroup)
-
-    const leaderList = document.createElement('ul');
-    leaderList.classList.add('leaderList')
-    leaderBoard.appendChild(leaderList)
-
-    const exitSection = document.createElement('div')
-    exitSection.classList.add("exit-section")
-    const exitBtn = document.createElement('button');
-    exitBtn.classList.add('exit')
-    exitBtn.textContent = 'Назад'
+    </div>
+    `
+        
+    const exitBtn = document.querySelector('.exit')
 
     exitBtn.addEventListener('click', () => {
         buildRegionPage()
     });
-
-    exitSection.appendChild(exitBtn);
-    leaderBoard.appendChild(exitSection);
-
-    document.body.appendChild(leaderBoard);
 }
 
 const buildLeaderBoard = (arr, myId) => {

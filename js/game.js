@@ -1,42 +1,16 @@
 const buildBaseGame = () => {
-    document.body.innerHTML = ''
-
     document.title = 'Game!'
 
-    const baseDiv = document.createElement('div')
-    baseDiv.setAttribute('id', 'wrapper')
+    document.body.innerHTML = `
+        <div id="wrapper">
+            <canvas id="canvas1"></canvas>
+        </div>
 
-    const canvas = document.createElement('canvas')
-    canvas.setAttribute('id', 'canvas1')
-
-    baseDiv.appendChild(canvas)
-
-    document.body.append(baseDiv);
-
-    let img = document.createElement('img')
-    img.setAttribute('src', '../img/spritesheet.png')
-    img.setAttribute('alt', 'player')
-    img.setAttribute('id', 'player')
-    document.body.appendChild(img)
-
-    img = document.createElement('img')
-    img.setAttribute('src', '../img/tile.png')
-    img.setAttribute('alt', 'tile')
-    img.setAttribute('id', 'tile')
-    document.body.appendChild(img)
-
-    img = document.createElement('img')
-    img.setAttribute('src', '../img/street.jpg')
-    img.setAttribute('alt', 'street')
-    img.setAttribute('id', 'street')
-    document.body.appendChild(img)
-
-    img = document.createElement('img')
-    img.setAttribute('src', '../img/road.png')
-    img.setAttribute('alt', 'road')
-    img.setAttribute('id', 'road')
-    document.body.appendChild(img)
-    
+        <img src="./img/spritesheet.png" alt="player" id="player">
+        <img src="./img/tile.png" alt="tile" id="tile">
+        <img src="./img/street.jpg" alt="street" id="street">
+        <img src="./img/road.png" alt="road" id="road">
+    `
 }
 
 class Game {
