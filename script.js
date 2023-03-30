@@ -31,7 +31,7 @@ window.addEventListener('load',function (){
 
             this.input = new InputHandler(this);
             this.player = new Player(this, this.playerSpeed);
-            this.enemySpeed = 8 //(this.width - (this.player.x + this.player.width)) / ((this.height - this.checkLine) / this.tileSpeed);
+            this.enemySpeed = 8;
             // УДАЛИТЬ ПОТОМ
             this.speedDelta = Math.abs(this.enemySpeed - this.tileSpeed);
             this.yRoad = this.checkLine - this.startline + this.width*0.25;
@@ -65,26 +65,22 @@ window.addEventListener('load',function (){
                 canvas.width = e.target.innerWidth
             });
 
-            // test area
-            // this.enemy = new Enemy(this);
-            // this.tileSpeedPxPerSec = 380 * this.tileSpeed;
-
         }
         render(context, deltaTime){
             context.drawImage(this.roadBg, 0,this.bottomMargin, this.width, this.height-this.bottomMargin)
             context.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
-            //if (!this.gameEnd){
+            if (!this.gameEnd){
                 handlerTiles(this, deltaTime);
                 // this.enemy.draw(context)
                 // this.enemy.update(deltaTime)
                 this.player.draw(context);
                 this.player.update(deltaTime);
                 context.fillRect(0, this.checkLine,this.width, 3)
-                context.fillStyle="pink"
-                context.fillRect(this.player.x+this.player.width-60, this.bottomMargin-50, 10,50)
+                //context.fillStyle="pink"
+                //context.fillRect(this.player.x+this.player.width*this.player.scale-60, this.bottomMargin-50, 10,50)
 
 
-            //}
+            }
 
             //displayText(this, context);
         }
@@ -96,11 +92,8 @@ window.addEventListener('load',function (){
         if (game.tileTimer > game.tileInterval + game.randomTileInterval){
             game.tiles.push(new Tile(game, game.tileSpeed ,Math.floor(Math.random() * 4)))
             game.enemies.push(new Enemy(game, game.enemyPosition, game.enemySpeed))
-
-            //console.log(game.tiles)
             game.randomTileInterval = Math.random() * game.tileInterval + 500;
             game.tileTimer = 0;
-            console.log(game.enemies)
         } else {
             game.tileTimer += deltaTime
         }
@@ -114,34 +107,34 @@ window.addEventListener('load',function (){
             getScore(game, tile, deltaTime);
         })
         displayText(game,ctx)
+
+        // filtering deleted elements
         game.tiles = game.tiles.filter(tile => !tile.markedForDelition);
         game.enemies = game.enemies.filter(enemy => !enemy.markedForDelition);
     }
 
     function getScore(game, tile, deltaTime){
         game.deltaScore = 0
-        if (tile.x <= game.touchX &&
+        if (game.touchY >= game.checkLine &&tile.x <= game.touchX &&
             game.touchX <= tile.x + tile.width &&
             game.touchY - tile.y <= tile.height){
             if (game.checkLine - 50 <= game.touchY){
                 game.deltaScore = 50
                 game.lastScore = "perfect"
                 //game.enemies[0].markedForDelition = true;
-            } else if (game.checkLine * 1.25 - 50 <= game.touchY){
-                game.deltaScore = 25
-                game.lastScore = "good"
-                //game.enemies[0].markedForDelition = true;
-            } else if (game.checkLine * 1.5 - 50 <= game.touchY){
-                game.deltaScore = 10
-                game.lastScore = "bad"
-                game.enemies[0].markedForDelition = true;
+            // } else if (game.checkLine * 1.25 - 50 <= game.touchY){
+            //     game.deltaScore = 25
+            //     game.lastScore = "good"
+            //     //game.enemies[0].markedForDelition = true;
+            // } else if (game.checkLine * 1.5 - 50 <= game.touchY){
+            //     game.deltaScore = 10
+            //     game.lastScore = "bad"
+            //     game.enemies[0].markedForDelition = true;
             } else {
                 game.deltaScore = 0
                 game.lastScore = "miss"
                 // abstract player hp - 1
-                if (game.player.playerHealth.currentHP > 0){
-                    game.player.playerHealth.currentHP -= 1;
-                }
+                game.player.hit()
 
             }
             game.score += game.deltaScore

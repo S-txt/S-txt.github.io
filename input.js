@@ -21,11 +21,11 @@ export class InputHandler {
             this.game.key = 'touchend'
 
         })
-        window.addEventListener('touchstart', e => {
-            this.game.touchY = e.changedTouches[0].pageY
-            this.game.touchX = e.changedTouches[0].pageX
-            this.game.key = 'touchstart'
-        })
+        // window.addEventListener('touchstart', e => {
+        //     this.game.touchY = e.changedTouches[0].pageY
+        //     this.game.touchX = e.changedTouches[0].pageX
+        //     this.game.key = 'touchstart'
+        // })
         // window.addEventListener('click', e => {
         //     console.log(e.button)
         //     this.game.touchY = e.y

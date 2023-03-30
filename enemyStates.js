@@ -57,7 +57,7 @@ export  class Run extends State{
     }
     // tracking to change state
     handleState(game){
-        if (this.enemy.x <= game.player.x + game.player.width - 50){
+        if (this.enemy.x <= game.player.x + game.player.width * game.player.scale - 50) {
             this.enemy.setState(states.HIT)
         }
 

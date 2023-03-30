@@ -37,14 +37,12 @@ export class Tile{
         if (this.y > this.game.width + this.game.bottomMargin + this.width ){
             this.markedForDelition = true;
             this.game.lastScore = "miss";
-
-            if (this.game.player.playerAlive) {
-                this.game.player.playerHealth.currentHP -= 1;
-            }
+            this.game.player.hit()
 
         // Player clicked a tile
         } else if ((this.x <= this.game.touchX && this.game.touchX <= this.x + this.width) &&
-            (this.y <= this.game.touchY && this.game.touchY <= this.y + this.height)){
+            (this.y <= this.game.touchY && this.game.touchY <= this.y + this.height) &&
+            this.game.touchY >= this.game.checkLine) {
             this.markedForDelition = true;
 
 

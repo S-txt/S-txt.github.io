@@ -34,16 +34,18 @@ export  class Idle extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 0;
-        this.player.maxFrame = 6;
+        this.player.maxFrame = 3; // n-1
     }
     // tracking to change state
     handleState(game){
-        // if  (game.score >= 500){
-        //     //this.player.setState(states.RUN)
-        // } else
-        if (game.lastScore == 'miss'){
+
+        if (this.player.playerHealth.currentHP <= 0){
+            this.player.setState(states.DEATH)
+        }
+        if (this.player.playerHealth.currentHP !== this.player.playerHealth.lastHP){
             this.player.setState(states.HIT)
-        } else if(['perfect'].includes(game.lastScore)){
+        }
+        if(game.lastScore === 'perfect'){
                 this.player.setState(states.ATTACK)
             }
 
@@ -80,7 +82,7 @@ export  class Attack extends State{
     // tracking to change state
     handleState(game){
         if (this.player.frameX >= this.player.maxFrame){
-            this.player.game.lastScore = "perfect "
+            game.lastScore = "perfect "
             //game.enemies[0].setState(states.HIT)
 
             this.player.setState(states.IDLE)
@@ -95,14 +97,35 @@ export  class Hit extends State{
     // we have not this state, just blinking
     enter(){
         this.player.frameX = 0;
-        this.player.frameY = 0;
+        this.player.frameY = 3;
         this.player.maxFrame = 2;
     }
     // tracking to change state
-    handleState(){
+    handleState(game){
+        if (this.player.frameX >= this.player.maxFrame){
+            this.player.playerHealth.lastHP = this.player.playerHealth.currentHP
+            game.lastScore="miss "
+            this.player.setState(states.IDLE)
+
+        }
+    }
+}
+export  class Death extends State{
+    constructor(player) {
+        super('DEATH');
+        this.player = player;
+    }
+    // we have not this state, just blinking
+    enter(){
+        this.player.frameX = 0;
+        this.player.frameY = 4;
+        this.player.maxFrame = 5;
+    }
+    // tracking to change state
+    handleState(game){
 
         if (this.player.frameX >= this.player.maxFrame){
-            this.player.setState(states.IDLE)
+            this.player.game.gameEnd = true;
 
         }
     }
