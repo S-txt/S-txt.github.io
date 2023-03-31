@@ -23,7 +23,7 @@ window.addEventListener('load',function (){
             this.width = width;
             this.height = height;
             this.key = undefined;
-            this.bottomMargin = this.height * 0.39;
+            this.bottomMargin = this.height * 0.3;
             this.checkLine = this.height - this.width * 0.25;
             this.startline = this.bottomMargin;
             this.playerSpeed = 3 ;
@@ -46,7 +46,7 @@ window.addEventListener('load',function (){
             this.enemies = []
             this.tileTimer = 0;
             this.tileInterval = 200;
-            this.randomTileInterval = Math.random() * this.tileInterval + 1000;
+            this.randomTileInterval = Math.random() * this.tileInterval + 500;
             this.touchX = -1;
             this.touchY = -1;
             this.streetBg = document.getElementById('street')
