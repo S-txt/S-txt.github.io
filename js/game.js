@@ -3,7 +3,10 @@ const buildBaseGame = () => {
 
     document.body.innerHTML = `
         <div id="wrapper">
-            <canvas id="canvas1"></canvas>
+            <canvas id="canvasBG"></canvas>
+            <canvas id="canvasGame"></canvas>
+            
+            
         </div>
 
         <img src="./img/SteamMan.png" alt="player" id="player">
@@ -30,13 +33,13 @@ class Game {
         this.player = new Player(this, this.playerSpeed);
         this.enemySpeed = 8;
         // УДАЛИТЬ ПОТОМ
-        this.yRoad = this.checkLine - this.startline + this.width*0.25;
+        this.yRoad = this.checkLine - this.startline + this.width * 0.25;
         this.ySpeed = this.tileSpeed;
         this.yUpdates = this.yRoad / this.ySpeed; // число обновлений до достижения
         this.yTimeinSec = this.yUpdates ; // 60 апдейтов в секунде, столько нужно секунд на апдейт
-        this.xSpeed = this.enemySpeed * 60 / 1000
+        this.xSpeed = this.enemySpeed * 60 * 0.001;
         // __________
-        this.enemyPosition = this.yUpdates * (this.enemySpeed) + this.player.x + this.player.width  + 50;
+        this.enemyPosition = Math.floor(this.yUpdates * (this.enemySpeed) + this.player.x + this.player.width  + 50);
         this.tiles = [];
         this.enemies = [];
         this.tileTimer = 0;
@@ -49,6 +52,8 @@ class Game {
         this.lastScore = '';
         this.deltaScore = -1;
         this.score = 0;
+        this.scoreEl = null;
+        this.scoreGradeEl = null;
         this.roundTime = 50000; // in ms
         this.currentTime = 0; // in ms
         this.gameEnd = false;
@@ -60,26 +65,47 @@ class Game {
             this.ctx.width = e.target.innerWidth
         });
 
+        this.setUI()
+
     }
     render(context, deltaTime){
         context.drawImage(this.roadBg, 0,this.bottomMargin, this.width, this.height-this.bottomMargin)
         context.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
-        if (!this.gameEnd){
-            handlerTiles(this, deltaTime);
-            // this.enemy.draw(context)
-            // this.enemy.update(deltaTime)
-            this.player.draw(context);
-            this.player.update(deltaTime);
-            context.fillRect(0, this.checkLine,this.width, 3)
-            //context.fillStyle="pink"
-            //context.fillRect(this.player.x+this.player.width*this.player.scale-60, this.bottomMargin-50, 10,50)
 
+        handlerTiles(this, deltaTime);
 
-        } else {
-            buildLeaderBoardPage();
-        }
+        this.player.draw(context);
+        this.player.update(deltaTime);
 
-        //displayText(this, context);
+        context.fillRect(0, this.checkLine,this.width, 3)
+    }
+
+    setUI(){
+        // Init UI DOM elements
+        let progress = document.createElement("progress");
+        progress.className = "hp";
+        progress.max = this.player.playerHealth.maxHP;
+        progress.value = this.player.playerHealth.currentHP;
+        document.body.append(progress);
+
+        let progressText = document.createElement("div");
+        progressText.className = "hpText";
+        document.body.append(progressText);
+
+        let score = document.createElement("div");
+        score.className = "score";
+        score.textContent = this.score;
+        document.body.append(score);
+
+        let scoreGrade = document.createElement("div");
+        scoreGrade.className = "scoreGrade";
+        scoreGrade.textContent = this.lastScore;
+        document.body.append(scoreGrade);
+
+        this.player.playerHealth.bar = progress;
+        this.player.playerHealth.barText = progressText;
+        this.scoreEl = score;
+        this.scoreGradeEl = scoreGrade;
     }
 }
 
@@ -94,6 +120,7 @@ function handlerTiles (game, deltaTime){
     } else {
         game.tileTimer += deltaTime
     }
+    // update elements
     game.enemies.forEach(enemy =>{
         enemy.draw(game.ctx);
         enemy.update(deltaTime);
@@ -103,7 +130,11 @@ function handlerTiles (game, deltaTime){
         tile.update(game.ctx,deltaTime);
         getScore(game, tile, deltaTime);
     })
-    displayText(game,game.ctx)
+
+
+    // update score on screen
+    game.scoreEl.textContent = game.score;
+    game.scoreGradeEl.textContent = game.lastScore;
 
     // filtering deleted elements
     game.tiles = game.tiles.filter(tile => !tile.markedForDelition);
@@ -118,52 +149,24 @@ function getScore(game, tile, deltaTime){
         if (game.checkLine - 50 <= game.touchY){
             game.deltaScore = 50
             game.lastScore = "perfect"
-            //game.enemies[0].markedForDelition = true;
-            // } else if (game.checkLine * 1.25 - 50 <= game.touchY){
-            //     game.deltaScore = 25
-            //     game.lastScore = "good"
-            //     //game.enemies[0].markedForDelition = true;
-            // } else if (game.checkLine * 1.5 - 50 <= game.touchY){
-            //     game.deltaScore = 10
-            //     game.lastScore = "bad"
-            //     game.enemies[0].markedForDelition = true;
+            game.score += game.deltaScore
+            console.log(game.scoreEl.textContent)
+            game.scoreEl.textContent = game.score;
         } else {
-            game.deltaScore = 0
             game.lastScore = "miss"
             // abstract player hp - 1
             game.player.hit()
-
         }
-        game.score += game.deltaScore
-        game.deltaScore = 0
-        //console.log('deltaScore: ' + game.deltaScore)
     }
 
-}
-
-function displayText(game, context){
-    context.fillStyle = 'grey';
-    context.font = '16px Comics Sans';
-    context.fillText(game.score, 30,  30);
-    context.font = '30px Comics Sans';
-    context.fillText(game.lastScore , game.width/2.5, game.height/2);
-    //context.font = '16px Comics Sans';
-    //context.fillText(game.roundTime/1000 , 70, 30);
-    context.fillStyle = 'white';
-    context.font = '16px Comics Sans';
-    context.fillText(game.score, 30, 30);
-    context.font = '30px Comics Sans';
-    context.fillText(game.lastScore, game.width/2.5+2, game.height/2+2);
-    //context.font = '16px Comics Sans';
-    //context.fillText(game.roundTime/1000 , 70, 30)
 }
 
 const buildGamePage = () => {
     buildBaseGame();
 
 
-    const canvas = document.getElementById('canvas1');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('canvasGame');
+    const ctx = canvas.getContext('2d', { alpha: false }); // Alpha channel disabled for better optimization
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -174,11 +177,16 @@ const buildGamePage = () => {
         // fps calculation
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
-    
+
         ctx.clearRect(0,0, canvas.width, canvas.height);
-        game.render(ctx, deltaTime);
-        game.roundTime -= deltaTime;
-        requestAnimationFrame(animate)
+        if (!game.gameEnd){
+            game.render(ctx, deltaTime);
+            game.roundTime -= deltaTime;
+            requestAnimationFrame(animate)
+        } else{
+            // game is ended redraw to leaderboard
+            buildLeaderBoardPage();
+        }
     }
 
     const game = new Game(ctx, canvas.width, canvas.height);

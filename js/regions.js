@@ -6,7 +6,7 @@ const buildBaseRegions = () => {
 
         <div class="region-section">
             <h1 class="region-main-header">Choose a region!</h1>
-
+            
             <ul class="region-list"></ul>
         </div>
     `

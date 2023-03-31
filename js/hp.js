@@ -7,18 +7,16 @@ class HP {
         this.currentHP = this.maxHP;
         this.imuneTimer = 0;
         this.imuneInterval = 1000;
+        this.bar = null;
+        this.barText = null;
 
     }
 
     draw(context){
-        context.fillStyle = 'grey';
-        context.fillRect(30, 30, this.width, this.height);
-        context.fillStyle = 'red';
-        context.fillRect(30, 30, this.width / this.maxHP * this.currentHP, this.height);
-        context.fillStyle = 'white';
-        context.font = '16px Comics Sans';
-        context.fillText(this.currentHP + '/' + this.maxHP, 35, 46)
-
+        if (this.bar != null){
+            this.bar.value = this.currentHP
+            this.barText.textContent = this.currentHP + " \\ " + this.maxHP;
+        }
     }
 
 }
