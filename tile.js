@@ -1,14 +1,16 @@
 export class Tile{
-    constructor(game, row) {
+    constructor(game, maxSpeed, row) {
         this.game = game;
         this.width = game.width/4;
         this.height = this.width;
         this.image = document.getElementById('tile')
         this.speed = 0;
-        this.maxSpeed = 8;
+        this.maxSpeed = maxSpeed;
         this.x = row * this.width;
-        this.y = this.game.bottomMargin - this.width;
+        this.y = this.game.bottomMargin - this.height; // changed
         this.markedForDelition = false;
+        this.cTime = 0;
+        this.endTime = null;
 
     }
 
@@ -26,19 +28,23 @@ export class Tile{
     }
 
     update(ctx, deltaTime){
+        //Update tile function
+
         this.setSpeed(this.maxSpeed);
         this.y += this.speed;
+        this.endTime += deltaTime
         // tile is out of bound
         if (this.y > this.game.width + this.game.bottomMargin + this.width ){
             this.markedForDelition = true;
             this.game.lastScore = "miss";
-            if (this.game.player.playerAlive) {
-                this.game.player.playerHealth.currentHP -= 1;
-            }
+            this.game.player.hit()
+
         // Player clicked a tile
         } else if ((this.x <= this.game.touchX && this.game.touchX <= this.x + this.width) &&
-            (this.y <= this.game.touchY && this.game.touchY <= this.y + this.height)){
-            this.markedForDelition = true
+            (this.y <= this.game.touchY && this.game.touchY <= this.y + this.height) &&
+            this.game.touchY >= this.game.checkLine) {
+            this.markedForDelition = true;
+
 
         }
 

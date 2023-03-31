@@ -1,46 +1,49 @@
 import {HP} from './hp.js';
-import {Idle, Run, Attack, Hit} from "./playerStates.js";
+import {Idle, Run, Attack, Hit, Death} from "./playerStates.js";
 
 export class Player {
-    constructor(game){
+    constructor(game, maxSpeed){
         this.game = game;
-        this.SpriteWidth = 183;
-        this.SpriteHeight = 146;
+        this.SpriteWidth = 48;
+        this.SpriteHeight = 48;
         this.frameX = 0;
         this.frameY = 0;
-        this.maxFrame = 6;
+        this.maxFrame = 4;
         this.width = this.SpriteWidth;
         this.height = this.SpriteHeight;
+        this.scale = 3;
         this.x = 10;
-        this.y = this.game.bottomMargin - this.height ;
+        this.y = this.game.bottomMargin - this.height * this.scale ;
         this.speed = 0;
-        this.maxSpeed = 3;
+        this.maxSpeed = maxSpeed;
         this.image = document.getElementById('player');
 
-        this.fps = 15;
+        this.fps = 16;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
 
         this.playerHealth = new HP(this.game);
-        this.playerAlive = true;
-
-        this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this)];
+        // TODO add state death
+        this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this), new Death(this)];
         this.currentState = this.states[0];
         this.currentState.enter()
 
     }
 
     draw(context){
-        // context.fillRect(this.x, this.y, this.width, this.height);
+        // context.fillStyle = "lime";
+        // context.globalAlpha = 0.5;
+        // context.fillRect(this.x, this.y, this.width * this.scale , this.height * this.scale);
+        // context.globalAlpha = 1;
         context.drawImage(this.image,
             this.frameX * this.SpriteWidth,
             this.frameY * this.SpriteHeight,
-            this.width,
-            this.height,
+            this.SpriteWidth,
+            this.SpriteHeight,
             this.x,
             this.y,
-            this.width,
-            this.height)
+            this.width * this.scale,
+            this.height * this.scale)
         this.playerHealth.draw(context)
 
     }
@@ -50,29 +53,11 @@ export class Player {
     }
 
     update(deltaTime){
-        if (this.playerHealth.currentHP <= 0 ){
-            this.playerAlive = false;
-            this.game.gameEnd = true;
-        }
-        this.currentState.handleState(this.game)
-        // animation & speed controls
-        // if (this.game.key == 'PArrowRight') {
-        //     this.setSpeed(this.maxSpeed);
-        //     this.frameY = 1;
-        // } else if (this.game.key == 'RArrowRight'){
-        //     this.setSpeed(0);
-        //     this.frameY = 0
-        // } else if (this.game.key == 'PArrowLeft'){
-        //     this.setSpeed(-this.maxSpeed);
-        //     this.frameY = 1;
-        // } else if (this.game.key == 'RArrowLeft'){
-        //     this.setSpeed(0);
-        //     this.frameY = 0
-        // } else {
-        //     this.setSpeed(0);
-        //     this.frameY = 0
+        // if (this.playerHealth.currentHP <= 0 ){
+        //     this.setState(4)
+        //     this.game.gameEnd = true;
         // }
-
+        this.currentState.handleState(this.game)
         this.x += this.speed
 
         // horizontal boundaries
@@ -87,24 +72,32 @@ export class Player {
         } else if (this.y > this.game.height - this.height - this.game.bottomMargin){
             this.y = this.game.height - this.height;
         }
-
+        if (!this.game.gameEnd){
         // sprite animation
-        if (this.frameTimer > this.frameInterval) {
+        if (this.frameTimer >= this.frameInterval) {
             // fixing not eq frames
             if (this.frameX >= this.maxFrame){
                 this.frameX = 0;
             } else {
                 this.frameX ++;
+                //console.log(this.frameX)
             }
             this.frameTimer = 0;
         } else {
             this.frameTimer += deltaTime
         }
-
+        }
     }
 
     setState(state){
         this.currentState = this.states[state]
         this.currentState.enter()
+    }
+
+    hit(){
+        if (this.playerHealth.currentHP > 0){
+            this.playerHealth.lastHP = this.playerHealth.currentHP;
+            this.playerHealth.currentHP -= 1;
+        }
     }
 }
