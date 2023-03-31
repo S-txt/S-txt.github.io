@@ -25,7 +25,7 @@ class State {
     // }
 }
 
-export  class Idle extends State{
+class Idle extends State{
     constructor(enemy) {
         super('IDLE');
         this.enemy = enemy;
@@ -43,7 +43,7 @@ export  class Idle extends State{
 
     }
 }
-export  class Run extends State{
+class Run extends State{
     constructor(enemy) {
         super('RUN');
         this.enemy = enemy;
@@ -68,7 +68,7 @@ export  class Run extends State{
 
     }
 }
-export  class Attack extends State{
+class Attack extends State{
     constructor(enemy) {
         super('ATTACK');
         this.enemy = enemy;
@@ -83,7 +83,7 @@ export  class Attack extends State{
     handleState(){
     }
 }
-export  class Hit extends State{
+class Hit extends State{
     constructor(enemy) {
         super('HIT');
         this.enemy = enemy;
@@ -102,7 +102,7 @@ export  class Hit extends State{
         }
     }
 }
-export  class Death extends State{
+class Death extends State{
     constructor(enemy) {
         super('DEATH');
         this.enemy = enemy;

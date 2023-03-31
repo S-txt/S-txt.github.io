@@ -1,7 +1,4 @@
-import {HP} from "./hp.js";
-import {Attack, Hit, Idle, Run, Death} from "./enemyStates.js";
-
-export class Enemy {
+class Enemy {
     constructor(game, position, maxSpeed) {
         this.game = game;
         this.SpriteWidth = 87;

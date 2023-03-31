@@ -1,7 +1,7 @@
 import { Player } from './player.js';
 import { Tile } from './tile.js'
 import { InputHandler } from "./input.js";
-import {Enemy} from "./enemy.js";
+import {Enemy} from "./js/enemy.js";
 
 window.addEventListener('load',function (){
 
