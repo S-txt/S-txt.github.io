@@ -9,20 +9,7 @@ const states = {
 class State {
     constructor(state) {
         this.state = state;
-        // this.idleFrames = 0;
-        // this.runFrames = 0;
-        // this.attackFrames = 0;
-        // this.hitFrames = 0;
-        // this.deathFrames = 0;
     }
-
-    // setFrames(idleFrames, runFrames, attackFrames, hitFrames, deathFrames){
-    //     this.idleFrames = idleFrames;
-    //     this.runFrames = runFrames;
-    //     this.attackFrames = attackFrames;
-    //     this.hitFrames = hitFrames;
-    //     this.deathFrames = deathFrames;
-    // }
 }
 
 class Idle extends State{
@@ -38,16 +25,18 @@ class Idle extends State{
     }
     // tracking to change state
     handleState(game){
-
+        // is player dead
         if (this.player.playerHealth.currentHP <= 0){
             this.player.setState(states.DEATH)
         }
+        // is player get hit
         if (this.player.playerHealth.currentHP !== this.player.playerHealth.lastHP){
             this.player.setState(states.HIT)
         }
+        // is player attack
         if(game.lastScore === 'perfect'){
                 this.player.setState(states.ATTACK)
-            }
+        }
 
     }
 }
@@ -110,7 +99,7 @@ class Hit extends State{
         }
     }
 }
-export  class Death extends State{
+class Death extends State{
     constructor(player) {
         super('DEATH');
         this.player = player;
@@ -126,7 +115,6 @@ export  class Death extends State{
 
         if (this.player.frameX >= this.player.maxFrame){
             this.player.game.gameEnd = true;
-
         }
     }
 }

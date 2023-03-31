@@ -1,4 +1,4 @@
-const states = {
+const enemyStates = {
     IDLE: 0,
     RUN: 1,
     ATTACK: 2,
@@ -6,26 +6,13 @@ const states = {
     DEATH: 4,
 }
 
-class State {
+class EnemyState {
     constructor(state) {
         this.state = state;
-        // this.idleFrames = 0;
-        // this.runFrames = 0;
-        // this.attackFrames = 0;
-        // this.hitFrames = 0;
-        // this.deathFrames = 0;
     }
-
-    // setFrames(idleFrames, runFrames, attackFrames, hitFrames, deathFrames){
-    //     this.idleFrames = idleFrames;
-    //     this.runFrames = runFrames;
-    //     this.attackFrames = attackFrames;
-    //     this.hitFrames = hitFrames;
-    //     this.deathFrames = deathFrames;
-    // }
 }
 
-class Idle extends State{
+class EnemyIdle extends EnemyState{
     constructor(enemy) {
         super('IDLE');
         this.enemy = enemy;
@@ -40,10 +27,9 @@ class Idle extends State{
     // tracking to change state
     handleState(game){
         //don't use on enemy
-
     }
 }
-class Run extends State{
+class EnemyRun extends EnemyState{
     constructor(enemy) {
         super('RUN');
         this.enemy = enemy;
@@ -57,18 +43,19 @@ class Run extends State{
     }
     // tracking to change state
     handleState(game){
+        // enemy reach the player
         if (this.enemy.x <= game.player.x + game.player.width * game.player.scale - 50) {
-            this.enemy.setState(states.HIT)
+            this.enemy.setState(enemyStates.HIT)
         }
 
         // reserve out of bounce
         if(this.enemy.x <= -this.enemy.width){
-            this.enemy.setState(states.HIT)
+            this.enemy.setState(enemyStates.HIT)
         }
 
     }
 }
-class Attack extends State{
+class EnemyAttack extends EnemyState{
     constructor(enemy) {
         super('ATTACK');
         this.enemy = enemy;
@@ -83,7 +70,7 @@ class Attack extends State{
     handleState(){
     }
 }
-class Hit extends State{
+class EnemyHit extends EnemyState{
     constructor(enemy) {
         super('HIT');
         this.enemy = enemy;
@@ -98,11 +85,11 @@ class Hit extends State{
     // tracking to change state
     handleState(){
         if (this.enemy.frameX >= this.enemy.maxFrame) {
-        this.enemy.setState(states.DEATH);
+        this.enemy.setState(enemyStates.DEATH);
         }
     }
 }
-class Death extends State{
+class EnemyDeath extends EnemyState{
     constructor(enemy) {
         super('DEATH');
         this.enemy = enemy;

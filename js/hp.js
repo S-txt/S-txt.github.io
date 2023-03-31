@@ -1,4 +1,4 @@
-export class HP {
+class HP {
     constructor(game) {
         this.game = game;
         this.width = this.game.width / 3;

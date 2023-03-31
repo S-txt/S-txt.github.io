@@ -18,24 +18,28 @@ class Enemy {
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
 
-        //this.Health = new HP(this.game);
         this.markedForDelition = false;
 
-        this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this), new Death(this)];
+        this.states = [new EnemyIdle(this), new EnemyRun(this), new EnemyAttack(this), new EnemyHit(this), new EnemyDeath(this)];
         this.currentState = this.states[1];
         this.currentState.enter()
 
     }
 
     setSpeed(speed){
+        //set up speed for enemy
         this.speed = speed;
     }
 
     draw(context) {
+        //draw function for enemy
+
+        // ==== hitbox of enemy =====
         // context.fillStyle = "red"
         // context.globalAlpha = 0.5;
         // context.fillRect(this.x, this.y, this.width, this.height);
         // context.globalAlpha = 1;
+        // ==========================
         context.drawImage(this.image,
             this.frameX * this.SpriteWidth,
             this.frameY * this.SpriteHeight,
@@ -50,11 +54,13 @@ class Enemy {
     }
 
     setState(state){
+        //set up state for enemy
         this.currentState = this.states[state]
         this.currentState.enter()
     }
 
     update(deltaTime){
+        //main update enemy function
         this.currentState.handleState(this.game)
 
         this.x -= this.speed
@@ -69,10 +75,6 @@ class Enemy {
             this.frameTimer = 0;
         } else {
             this.frameTimer += deltaTime
-        }
-
-        if (this.x <= this.game.player.x + this.game.player.width - 50){
-            //this.markedForDelition = true;
         }
 
     }

@@ -1,11 +1,11 @@
 class Player {
-    constructor(game){
+    constructor(game, maxSpeed){
         this.game = game;
         this.SpriteWidth = 48;
         this.SpriteHeight = 48;
         this.frameX = 0;
         this.frameY = 0;
-        this.maxFrame = 4;
+        this.maxFrame = 3;
         this.width = this.SpriteWidth;
         this.height = this.SpriteHeight;
         this.scale = 3;
@@ -20,7 +20,6 @@ class Player {
         this.frameTimer = 0;
 
         this.playerHealth = new HP(this.game);
-        // TODO add state death
         this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this), new Death(this)];
         this.currentState = this.states[0];
         this.currentState.enter()
@@ -28,6 +27,8 @@ class Player {
     }
 
     draw(context){
+        //draw player function
+
         // context.fillStyle = "lime";
         // context.globalAlpha = 0.5;
         // context.fillRect(this.x, this.y, this.width * this.scale , this.height * this.scale);
@@ -46,14 +47,13 @@ class Player {
     }
 
     setSpeed(speed){
+        //set up speed for player
         this.speed = speed;
     }
 
     update(deltaTime){
-        // if (this.playerHealth.currentHP <= 0 ){
-        //     this.setState(4)
-        //     this.game.gameEnd = true;
-        // }
+        //update function
+
         this.currentState.handleState(this.game)
         this.x += this.speed
 
@@ -87,11 +87,13 @@ class Player {
     }
 
     setState(state){
+        //set up state for player
         this.currentState = this.states[state]
         this.currentState.enter()
     }
 
     hit(){
+        //counting hit to player
         if (this.playerHealth.currentHP > 0){
             this.playerHealth.lastHP = this.playerHealth.currentHP;
             this.playerHealth.currentHP -= 1;

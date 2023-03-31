@@ -6,10 +6,11 @@ const buildBaseGame = () => {
             <canvas id="canvas1"></canvas>
         </div>
 
-        <img src="./img/spritesheet.png" alt="player" id="player">
+        <img src="./img/SteamMan.png" alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
+        <img src="./img/enemy.png" alt="enemy" id="enemy">
     `
 }
 
@@ -29,17 +30,15 @@ class Game {
         this.player = new Player(this, this.playerSpeed);
         this.enemySpeed = 8;
         // УДАЛИТЬ ПОТОМ
-        this.speedDelta = Math.abs(this.enemySpeed - this.tileSpeed);
         this.yRoad = this.checkLine - this.startline + this.width*0.25;
         this.ySpeed = this.tileSpeed;
         this.yUpdates = this.yRoad / this.ySpeed; // число обновлений до достижения
         this.yTimeinSec = this.yUpdates ; // 60 апдейтов в секунде, столько нужно секунд на апдейт
         this.xSpeed = this.enemySpeed * 60 / 1000
         // __________
-        this.enemyPosition = this.yUpdates * (this.enemySpeed) + this.player.x + this.player.width  + 50 // + (this.width - (this.player.x + this.player.width - 100))
-        ;
-        this.tiles = []
-        this.enemies = []
+        this.enemyPosition = this.yUpdates * (this.enemySpeed) + this.player.x + this.player.width  + 50;
+        this.tiles = [];
+        this.enemies = [];
         this.tileTimer = 0;
         this.tileInterval = 200;
         this.randomTileInterval = Math.random() * this.tileInterval + 500;
@@ -57,8 +56,8 @@ class Game {
         window.addEventListener("resize", (e) => {
             this.height = e.target.innerHeight
             this.width = e.target.innerWidth
-            canvas.height = e.target.innerHeight
-            canvas.width = e.target.innerWidth
+            this.ctx.height = e.target.innerHeight
+            this.ctx.width = e.target.innerWidth
         });
 
     }
@@ -96,15 +95,15 @@ function handlerTiles (game, deltaTime){
         game.tileTimer += deltaTime
     }
     game.enemies.forEach(enemy =>{
-        enemy.draw(ctx);
+        enemy.draw(game.ctx);
         enemy.update(deltaTime);
     })
     game.tiles.forEach(tile => {
-        tile.draw(ctx);
-        tile.update(ctx,deltaTime);
+        tile.draw(game.ctx);
+        tile.update(game.ctx,deltaTime);
         getScore(game, tile, deltaTime);
     })
-    displayText(game,ctx)
+    displayText(game,game.ctx)
 
     // filtering deleted elements
     game.tiles = game.tiles.filter(tile => !tile.markedForDelition);
@@ -182,10 +181,10 @@ const buildGamePage = () => {
         requestAnimationFrame(animate)
     }
 
-    const game = new Game(canvas.width, canvas.height);
+    const game = new Game(ctx, canvas.width, canvas.height);
 
     let lastTime = 0;
-
     animate(0);
+
     console.log(game);
 }
