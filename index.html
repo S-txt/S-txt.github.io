@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="MobileOptimized" content="176"/>
-    <meta name="HandheldFriendly" content="true"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="height=device-height, initial-scale=1.0">
-    <title>Demo</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/leaderBoard.css">
+    <link rel="stylesheet" href="./css/regions.css">
+    <link rel="stylesheet" href="./css/game.css">
+    <title>Regions</title>
 </head>
 <body>
-    <div class="username"></div>
-    <div id="wrapper">
-        <canvas id="canvas1"></canvas>
-    </div>
-    <img src="SteamMan.png" alt="player" id="player">
-    <img src="enemy.png" alt="enemy" id="enemy">
-    <img src="tile.png" alt="tile" id="tile">
-    <img src="street.jpg", alt="street" id="street">
-    <img src="road.png", alt="road" id="road">
-<script> document.oncontextmenu = cmenu; function cmenu() { return false; } </script>
-<script type="module" src="script.js"></script>
+
+    <script> document.oncontextmenu = cmenu; function cmenu() { return false; } </script>
+    <script src="js/hp.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/playerStates.js"></script>
+    <script src="js/tile.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/leaderBoard.js"></script>
+    <script src="js/regions.js"></script>
+    <script src="js/main.js"></script>
+
 </body>
 </html>

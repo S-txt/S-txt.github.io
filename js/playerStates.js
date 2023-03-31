@@ -25,7 +25,7 @@ class State {
     // }
 }
 
-export  class Idle extends State{
+class Idle extends State{
     constructor(player) {
         super('IDLE');
         this.player = player;
@@ -51,7 +51,7 @@ export  class Idle extends State{
 
     }
 }
-export  class Run extends State{
+class Run extends State{
     constructor(player) {
         super('RUN');
         this.player = player;
@@ -68,7 +68,7 @@ export  class Run extends State{
 
     }
 }
-export  class Attack extends State{
+class Attack extends State{
     constructor(player) {
         super('ATTACK');
         this.player = player;
@@ -89,7 +89,7 @@ export  class Attack extends State{
         }
     }
 }
-export  class Hit extends State{
+class Hit extends State{
     constructor(player) {
         super('HIT');
         this.player = player;

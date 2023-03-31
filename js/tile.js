@@ -1,4 +1,4 @@
-export class Tile{
+class Tile{
     constructor(game, maxSpeed, row) {
         this.game = game;
         this.width = game.width/4;

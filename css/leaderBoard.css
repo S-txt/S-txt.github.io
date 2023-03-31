@@ -1,0 +1,174 @@
+
+.leaderBoardHeader {
+    font-size: 25px;
+}
+
+.leaderBoard {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+    max-width: 500px;
+}
+
+.leaderList {
+    text-align: center;
+}
+
+.leader-points {
+    margin: 0 auto;
+}
+
+.leader-me {
+    font-size: 24px;
+}
+
+.leaderItem {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+
+
+
+.btn-group label {
+    color: #000;
+    background-color: white;
+    max-width: 34%;
+    font-weight: bold;
+    border: 0;
+    border-bottom: 1px solid #000;
+    outline: none;
+    position: relative;
+    top: 0;
+    padding: 12px 16px;
+    margin: 0 -1px 0 -1px;
+    z-index: 10;
+    transition: top 140ms linear;
+}
+.btn-group label:first-child {
+    border-radius: 8px 0 0 8px;
+    margin: 0;
+}
+.btn-group label:last-child {
+    border-radius: 0 8px 8px 0;
+    margin: 0;
+}
+.btn-group label:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 1px;
+    right: 1px;
+    bottom: -12px;
+    z-index: 5;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px #000;
+    transition: bottom 50ms linear;
+}
+.btn-group label:first-child:before {
+    border-radius: 8px 0 0 8px;
+}
+.btn-group label:last-child:before {
+    border-radius: 0 8px 8px 0;
+}
+.btn-group label:hover {
+    top: 4px;
+}
+.btn-group label:hover:before {
+    bottom: -8px;
+}
+.btn-group label:active {
+    top: 12px;
+}
+.btn-group label:active:before {
+    bottom: 0px;
+} 
+.stv-radio-button:checked + label {
+    top: 10px;
+    background-color: rgb(72, 61, 139);
+    color: white;
+}
+/* .stv-radio-button:checked + label:before {
+    bottom: 0px;
+}  */
+
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+    font-size: 85%;
+}
+
+.btn-group:before {
+    /* display: block; */
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: auto;
+    bottom: -12px;
+    left: auto;
+    border-radius: 8px;
+    width: 21.5rem;
+    background: rgba(255, 255, 255, 0.5);
+}
+  
+.stv-radio-buttons-wrapper {
+    clear: both;
+    display: inline-block;
+}
+
+.stv-radio-button {
+    position: absolute;
+    left: -9999em;
+    top: -9999em;
+}
+
+.stv-radio-button + label:first-of-type {
+    border-radius: 0.7em 0 0 0.7em;
+}
+.stv-radio-button + label:last-of-type {
+    border-radius: 0 0.7em 0.7em 0;
+}
+
+.exit-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.exit {
+    display: inline;
+    font-family: inherit;
+    padding: 14px 30px;
+    color: white;
+    /* width: 50%; */
+    background-color: rgba(72, 61, 139, 0.5);
+    border: 2px solid rgb(72, 61, 139);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.exit:hover {
+    background-color: rgba(95, 158, 160, 0.5);
+    border: 2px solid rgb(0, 139, 139);
+}
+
+.exit:active {
+    background-color: rgba(95, 158, 160, 0.7);
+    border: 2px solid rgb(0, 139, 139);
+}

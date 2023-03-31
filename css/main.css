@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'PressStart2P';
+    src: url('../fonts/PressStart2P-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Nineteen';
+    src: url('../fonts/NineteenEightySeven-MzMJ.ttf') format('truetype');
+  }
+
+
+body {
+    font-family: 'PressStart2P', sans-serif;
+    color: #dadada;
+    position: relative;
+
+    background: url(../img/background.gif) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
+    padding:0;
+    margin:0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
