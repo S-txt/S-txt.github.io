@@ -3,7 +3,7 @@ class HP {
         this.game = game;
         this.width = this.game.width / 3;
         this.height = 20;
-        this.maxHP = 10;
+        this.maxHP = 100;
         this.currentHP = this.maxHP;
         this.imuneTimer = 0;
         this.imuneInterval = 1000;

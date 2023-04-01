@@ -10,7 +10,6 @@
 }
 
 #wrapper{
-    position: fixed;
     display: block;
     height: 100%;
     -webkit-touch-callout: none;
@@ -24,7 +23,7 @@
 }
 .hp {
     display: block;
-    position: absolute;
+    position: fixed;
     top: 5%;
     left: 3%;
     -webkit-appearance: none;
@@ -32,19 +31,19 @@
 }
 .hpText{
     display: block;
-    position: absolute;
+    position: fixed;
     top: 5%;
     left: 10%;
 }
 .score{
     display: block;
-    position: absolute;
+    position: fixed;
     top: 2%;
     left: 10%;
 }
 .scoreGrade{
     display: block;
-    position: absolute;
+    position: fixed;
     font-size: min(5vw, 48px);
     top: 50%;
     left: 50%;
@@ -53,7 +52,7 @@
 }
 .timer{
     display: block;
-    position: absolute;
+    position: fixed;
     top: 2%;
     left: 50%;
     transform: translateX(-50%);
@@ -61,7 +60,7 @@
     font-size: min(6vw, 48px);
 }
 
-canvas {
+#canvasGame {
     background: grey;
     display: block;
     width: 100%;

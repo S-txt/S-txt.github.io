@@ -4,7 +4,7 @@ const buildBaseGame = () => {
     document.body.innerHTML = `
         <div id="wrapper">
             <canvas id="canvasBG"></canvas>
-            <canvas id="canvasGame"></canvas>
+            <canvas id="canvasGame" style="position: fixed;"></canvas>
             
             
         </div>
