@@ -8,7 +8,7 @@ const buildBaseGame = () => {
             
             
         </div>
-
+        
         <img src="./img/SteamMan.png" alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
@@ -23,41 +23,50 @@ class Game {
         this.width = width;
         this.height = height;
         this.key = undefined;
+
         this.bottomMargin = this.height * 0.3;
         this.checkLine = this.height - this.width * 0.25;
         this.startline = this.bottomMargin;
+
+        // speed params
         this.playerSpeed = 3 ;
         this.tileSpeed = 10;
+        this.enemySpeed = 8;
+
+        //timers
+        this.tileTimer = 0;
+        this.tileInterval = 200;
 
         this.input = new InputHandler(this);
         this.player = new Player(this, this.playerSpeed);
-        this.enemySpeed = 8;
-        // УДАЛИТЬ ПОТОМ
-        this.yRoad = this.checkLine - this.startline + this.width * 0.25;
-        this.ySpeed = this.tileSpeed;
-        this.yUpdates = this.yRoad / this.ySpeed; // число обновлений до достижения
-        this.yTimeinSec = this.yUpdates ; // 60 апдейтов в секунде, столько нужно секунд на апдейт
-        this.xSpeed = this.enemySpeed * 60 * 0.001;
-        // __________
-        this.enemyPosition = Math.floor(this.yUpdates * (this.enemySpeed) + this.player.x + this.player.width  + 50);
+
         this.tiles = [];
         this.enemies = [];
-        this.tileTimer = 0;
-        this.tileInterval = 200;
+
+        //DOM elements
+        this.scoreEl = null;
+        this.scoreGradeEl = null;
+        this.timeEl = null;
+
+        this.enemyPosition = Math.floor((this.checkLine - this.startline + this.width * 0.25) / this.tileSpeed * this.enemySpeed + this.player.x + this.player.width  + 50);
         this.randomTileInterval = Math.random() * this.tileInterval + 500;
+
         this.touchX = -1;
         this.touchY = -1;
+
         this.streetBg = document.getElementById('street')
         this.roadBg = document.getElementById('road')
+
         this.lastScore = '';
         this.deltaScore = -1;
         this.score = 0;
-        this.scoreEl = null;
-        this.scoreGradeEl = null;
-        this.roundTime = 50000; // in ms
+
+        this.roundTime = 50000; // in ms how fast difficulty will raise
         this.currentTime = 0; // in ms
+
         this.gameEnd = false;
         this.gamePaused = false;
+
         window.addEventListener("resize", (e) => {
             this.height = e.target.innerHeight
             this.width = e.target.innerWidth
@@ -65,6 +74,7 @@ class Game {
             this.ctx.width = e.target.innerWidth
         });
 
+        // init ui elements
         this.setUI()
 
     }
@@ -78,6 +88,8 @@ class Game {
         this.player.update(deltaTime);
 
         context.fillRect(0, this.checkLine,this.width, 3)
+
+        this.timeEl.textContent = Math.floor(this.currentTime * 0.001);
     }
 
     setUI(){
@@ -102,10 +114,17 @@ class Game {
         scoreGrade.textContent = this.lastScore;
         document.body.append(scoreGrade);
 
+        let timer = document.createElement("div");
+        timer.className = "timer";
+        this.currentTime = 0; // reset timer
+        timer.textContent = this.currentTime;
+        document.body.append(timer);
+
         this.player.playerHealth.bar = progress;
         this.player.playerHealth.barText = progressText;
         this.scoreEl = score;
         this.scoreGradeEl = scoreGrade;
+        this.timeEl = timer;
     }
 }
 
@@ -150,7 +169,6 @@ function getScore(game, tile, deltaTime){
             game.deltaScore = 50
             game.lastScore = "perfect"
             game.score += game.deltaScore
-            console.log(game.scoreEl.textContent)
             game.scoreEl.textContent = game.score;
         } else {
             game.lastScore = "miss"
@@ -181,7 +199,7 @@ const buildGamePage = () => {
         ctx.clearRect(0,0, canvas.width, canvas.height);
         if (!game.gameEnd){
             game.render(ctx, deltaTime);
-            game.roundTime -= deltaTime;
+            game.currentTime += deltaTime;
             requestAnimationFrame(animate)
         } else{
             // game is ended redraw to leaderboard
@@ -194,5 +212,5 @@ const buildGamePage = () => {
     let lastTime = 0;
     animate(0);
 
-    console.log(game);
+    //console.log(game);
 }
