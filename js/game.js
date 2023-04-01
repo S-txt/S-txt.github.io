@@ -23,6 +23,7 @@ class Game {
         this.width = width;
         this.height = height;
         this.key = undefined;
+        this.difficultyModifier = 1.1;
 
         this.bottomMargin = this.height * 0.3;
         this.checkLine = this.height - this.width * 0.25;
@@ -36,6 +37,7 @@ class Game {
         //timers
         this.tileTimer = 0;
         this.tileInterval = 200;
+        this.tileDifficultyInterval = 500
 
         this.input = new InputHandler(this);
         this.player = new Player(this, this.playerSpeed);
@@ -49,7 +51,7 @@ class Game {
         this.timeEl = null;
 
         this.enemyPosition = Math.floor((this.checkLine - this.startline + this.width * 0.25) / this.tileSpeed * this.enemySpeed + this.player.x + this.player.width  + 50);
-        this.randomTileInterval = Math.random() * this.tileInterval + 500;
+        this.randomTileInterval = Math.random() * this.tileInterval + this.tileDifficultyInterval;
 
         this.touchX = -1;
         this.touchY = -1;
@@ -61,8 +63,10 @@ class Game {
         this.deltaScore = -1;
         this.score = 0;
 
-        this.roundTime = 50000; // in ms how fast difficulty will raise
+        this.roundTime = 10; // in sec how fast difficulty will raise
         this.currentTime = 0; // in ms
+        this.playTime = 0; // in ms
+        this.lastTime = 0 // in sec
 
         this.gameEnd = false;
         this.gamePaused = false;
@@ -81,6 +85,14 @@ class Game {
     render(context, deltaTime){
         context.drawImage(this.roadBg, 0,this.bottomMargin, this.width, this.height-this.bottomMargin)
         context.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
+        this.playTime += deltaTime;
+        if (Math.floor(this.playTime * 0.001) % this.roundTime === 0 &&
+            this.tileSpeed <= 15 &&
+            Math.floor(this.playTime * 0.001) !== this.lastTime
+            ){
+            //console.log("increase")
+            this.lastTime = Math.floor(this.playTime * 0.001);
+            this.increaseDifficulty()}
 
         handlerTiles(this, deltaTime);
 
@@ -116,7 +128,6 @@ class Game {
 
         let timer = document.createElement("div");
         timer.className = "timer";
-        this.currentTime = 0; // reset timer
         timer.textContent = this.currentTime;
         document.body.append(timer);
 
@@ -126,15 +137,21 @@ class Game {
         this.scoreGradeEl = scoreGrade;
         this.timeEl = timer;
     }
+
+    increaseDifficulty(){
+        this.tileSpeed = Math.floor(this.tileSpeed * this.difficultyModifier)
+        this.enemySpeed = Math.floor(this.enemySpeed * this.difficultyModifier)
+        this.tileDifficultyInterval = Math.floor(this.tileDifficultyInterval * 0.8) //TODO make it more flex
+    }
 }
 
 function handlerTiles (game, deltaTime){
     // generate all
     // TODO move starting position to top border
-    if (game.tileTimer > game.tileInterval + game.randomTileInterval){
+    if (game.tileTimer > game.randomTileInterval){
         game.tiles.push(new Tile(game, game.tileSpeed ,Math.floor(Math.random() * 4)))
         game.enemies.push(new Enemy(game, game.enemyPosition, game.enemySpeed))
-        game.randomTileInterval = Math.random() * game.tileInterval + 500;
+        game.randomTileInterval = Math.random() * game.tileInterval + game.tileDifficultyInterval;
         game.tileTimer = 0;
     } else {
         game.tileTimer += deltaTime
@@ -212,5 +229,5 @@ const buildGamePage = () => {
     let lastTime = 0;
     animate(0);
 
-    //console.log(game);
+    console.log(game);
 }
