@@ -86,11 +86,13 @@
     height: 100%;
 }
 #canvasGame {
-    background: lightsalmon;
+    /*background: lightgrey;*/
     display: block;
+    position: fixed;
     width: 100%;
     height: 100%;
 }
+
 
 .animate{
     animation: anim ease-in 0.05s;

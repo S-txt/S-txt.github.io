@@ -3,13 +3,15 @@ const buildBaseGame = () => {
 
     document.body.innerHTML = `
         <div id="wrapper">
+            <div class="bgStreet"></div>
+            <div class="bgRoad"></div>
             <canvas id="canvasBG"></canvas>
-            <canvas id="canvasGame" style="position: fixed;"></canvas>
+            <canvas id="canvasGame"></canvas>
             
             
         </div>
         
-        <img src="./img/SteamMan.png" alt="player" id="player">
+        <img src="./img/yurei.png" alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
@@ -88,6 +90,7 @@ class Game {
 
         // init
         this.drawBg()
+
         this.setUI()
         this.pauseGame()
         //this.animationObserver()
@@ -95,9 +98,27 @@ class Game {
 
     }
     drawBg(){
-        console.log("generate BG")
-        this.ctxBg.drawImage(this.roadBg, 0,this.bottomMargin, this.width, this.height-this.bottomMargin)
-        this.ctxBg.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
+        console.log("generate BG");
+        this.ctxBg.fillStyle = "red";
+        this.ctxBg.clearRect(0,0,this.width,this.height);
+        if (this.streetBg.complete) {
+            this.ctxBg.drawImage(this.streetBg, 0, 0, this.width, this.bottomMargin)
+        } else {
+            this.streetBg.onload = (e) => {
+                this.ctxBg.drawImage(this.streetBg, 0, 0, this.width, this.bottomMargin)
+            };
+        }
+        if (this.roadBg.complete) {
+            this.ctxBg.drawImage(this.roadBg, 0, this.bottomMargin, this.width, this.height - this.bottomMargin)
+        } else {
+            this.roadBg.onload = (e) => {
+                this.ctxBg.drawImage(this.roadBg, 0, this.bottomMargin, this.width, this.height - this.bottomMargin)
+            };
+        }
+
+
+
+
     }
     animationObserver(){
         // Select the node that will be observed for mutations
@@ -263,7 +284,6 @@ function getScore(game, tile, deltaTime){
 
 const buildGamePage = (regionName, regionDiff) => {
     buildBaseGame();
-
     const canvas = document.getElementById('canvasGame');
     const ctx = canvas.getContext('2d'); // Alpha channel disabled for better optimization
 
@@ -292,7 +312,7 @@ const buildGamePage = (regionName, regionDiff) => {
         } else{
             // game is ended redraw to leaderboard
             //TODO remove event listener
-            console.log("Game ended at " + game.currentTime/1000 + "\nwith score " + game.score )
+            //console.log("Game ended at " + game.currentTime/1000 + "\nwith score " + game.score )
             // TODO send score to server
             //times.forEach((t) => {console.log(t)})
             buildLeaderBoardPage(game.regionName,game.score);
@@ -302,10 +322,10 @@ const buildGamePage = (regionName, regionDiff) => {
     const game = new Game(ctx, ctxBg, canvas.width, canvas.height, regionName, regionDiff);
     game.currentTime = 0;
     let lastTime = 0;
-    //game.drawBg()
     animate(0);
 
 
 
     console.log(game);
+
 }
