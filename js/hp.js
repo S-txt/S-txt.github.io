@@ -5,8 +5,7 @@ class HP {
         this.height = 20;
         this.maxHP = 10;
         this.currentHP = this.maxHP;
-        this.imuneTimer = 0;
-        this.imuneInterval = 1000;
+        this.lastHP = this.currentHP;
         this.bar = null;
         this.barText = null;
 

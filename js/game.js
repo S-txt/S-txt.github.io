@@ -5,13 +5,15 @@ const buildBaseGame = () => {
         <div class="username">${localStorage.getItem('currentRegion')}</div>
 
         <div id="wrapper">
+            <div class="bgStreet"></div>
+            <div class="bgRoad"></div>
             <canvas id="canvasBG"></canvas>
-            <canvas id="canvasGame" style="position: fixed;"></canvas>
+            <canvas id="canvasGame"></canvas>
             
             
         </div>
         
-        <img src="./img/SteamMan.png" alt="player" id="player">
+        <img src="./img/yurei.png" alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
@@ -20,12 +22,15 @@ const buildBaseGame = () => {
 }
 
 class Game {
-    constructor(ctx, width, height) {
+    constructor(ctx, ctxBg, width, height, regionName, regionDiff) {
         this.ctx = ctx;
+        this.ctxBg = ctxBg
         this.width = width;
         this.height = height;
+        this.regionName = regionName;
+        this.regionDiff = regionDiff;
         this.key = undefined;
-        this.difficultyModifier = 1.1;
+        this.difficultyModifier = 1.1 + (this.regionDiff * 0.05);
 
         this.bottomMargin = this.height * 0.3;
         this.checkLine = this.height - this.width * 0.25;
@@ -61,6 +66,7 @@ class Game {
         this.streetBg = document.getElementById('street')
         this.roadBg = document.getElementById('road')
 
+
         this.lastScore = '';
         this.deltaScore = -1;
         this.score = 0;
@@ -68,7 +74,7 @@ class Game {
         this.roundTime = 10; // in sec how fast difficulty will raise
         this.currentTime = 0; // in ms
         this.playTime = 0; // in ms
-        this.lastTime = 0 // in sec
+        this.lastTime = 0; // in sec
 
         this.gameEnd = false;
         this.gamePaused = false;
@@ -80,14 +86,71 @@ class Game {
             this.ctx.width = e.target.innerWidth
         });
 
-        // init ui elements
+        window.addEventListener("blur", (e ) => {
+            this.pauseGame()
+        })
+
+        // init
+        this.drawBg()
+
         this.setUI()
+        this.pauseGame()
+        //this.animationObserver()
+
+
+    }
+    drawBg(){
+        console.log("generate BG");
+        this.ctxBg.fillStyle = "red";
+        this.ctxBg.clearRect(0,0,this.width,this.height);
+        if (this.streetBg.complete) {
+            this.ctxBg.drawImage(this.streetBg, 0, 0, this.width, this.bottomMargin)
+        } else {
+            this.streetBg.onload = (e) => {
+                this.ctxBg.drawImage(this.streetBg, 0, 0, this.width, this.bottomMargin)
+            };
+        }
+        if (this.roadBg.complete) {
+            this.ctxBg.drawImage(this.roadBg, 0, this.bottomMargin, this.width, this.height - this.bottomMargin)
+        } else {
+            this.roadBg.onload = (e) => {
+                this.ctxBg.drawImage(this.roadBg, 0, this.bottomMargin, this.width, this.height - this.bottomMargin)
+            };
+        }
+
+
+
+
+    }
+    animationObserver(){
+        // Select the node that will be observed for mutations
+        const targetNode = document.getElementsByClassName("scoreGrade")[0];
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(function(mutations) {
+            if (!targetNode.classList.contains("animate")){
+                targetNode.classList.add("animate");
+            } else {targetNode.classList.remove("animate");}
+
+        });
+
+       // Start observing the target node for configured mutations
+        observer.observe(targetNode, {
+            attributes:    false,
+            childList:     true,
+            characterData: false});
 
     }
     render(context, deltaTime){
-        context.drawImage(this.roadBg, 0,this.bottomMargin, this.width, this.height-this.bottomMargin)
-        context.drawImage(this.streetBg, 0,0, this.width, this.bottomMargin)
+        //this.drawBg()
+        //console.log("play: "+ this.playTime + "\ndelta: " + deltaTime  )
+        // TODO predraw bg
+
+        //check pause game
+        if (this.gamePaused) return
         this.playTime += deltaTime;
+
+        //increase difficulty
         if (Math.floor(this.playTime * 0.001) % this.roundTime === 0 &&
             this.tileSpeed <= 15 &&
             Math.floor(this.playTime * 0.001) !== this.lastTime
@@ -97,17 +160,20 @@ class Game {
             this.increaseDifficulty()}
 
         handlerTiles(this, deltaTime);
-
         this.player.draw(context);
         this.player.update(deltaTime);
 
         context.fillRect(0, this.checkLine,this.width, 3)
 
-        this.timeEl.textContent = Math.floor(this.currentTime * 0.001);
+        this.timeEl.textContent = Math.floor(this.playTime * 0.001);
+
     }
 
     setUI(){
         // Init UI DOM elements
+
+        this.playTime = 0;
+
         let progress = document.createElement("progress");
         progress.className = "hp";
         progress.max = this.player.playerHealth.maxHP;
@@ -130,14 +196,34 @@ class Game {
 
         let timer = document.createElement("div");
         timer.className = "timer";
-        timer.textContent = this.currentTime;
+        timer.textContent = this.playTime;
         document.body.append(timer);
+
 
         this.player.playerHealth.bar = progress;
         this.player.playerHealth.barText = progressText;
         this.scoreEl = score;
         this.scoreGradeEl = scoreGrade;
         this.timeEl = timer;
+        //console.log(this.playTime)
+    }
+
+    pauseGame(){
+
+        //pause game function
+        if (this.gamePaused) return
+        if (this.gameEnd) return
+        this.gamePaused = true
+
+        //create a button
+        let play = document.createElement("div")
+        play.className = "play";
+        play.textContent = "Play";
+        play.addEventListener('click', (e) => {
+            this.gamePaused = false;
+            play.remove();
+        })
+        document.body.append(play);
     }
 
     increaseDifficulty(){
@@ -198,27 +284,32 @@ function getScore(game, tile, deltaTime){
 
 }
 
-const buildGamePage = async () => {
+const buildGamePage = async (regionName, regionDiff) => {
     buildBaseGame();
-
-
     const canvas = document.getElementById('canvasGame');
-    const ctx = canvas.getContext('2d', { alpha: false }); // Alpha channel disabled for better optimization
+    const ctx = canvas.getContext('2d'); // Alpha channel disabled for better optimization
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const canvasBg = document.getElementById('canvasBG');
+    const ctxBg = canvasBg.getContext('2d', { alpha: false }); // Alpha channel disabled for better optimization
 
+    canvasBg.width = window.innerWidth;
+    canvasBg.height = window.innerHeight;
+    //let times = []
     async function animate(timeStamp){
         // main animation loop
 
         // fps calculation
         const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;
+        lastTime = performance.now();
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
         if (!game.gameEnd){
-            game.render(ctx, deltaTime);
             game.currentTime += deltaTime;
+            //times.push(deltaTime)
+            game.render(ctx, deltaTime);
             requestAnimationFrame(animate)
         } else{
 
@@ -231,14 +322,21 @@ const buildGamePage = async () => {
 
 
             // game is ended redraw to leaderboard
-            buildLeaderBoardPage();
+            //TODO remove event listener
+            //console.log("Game ended at " + game.currentTime/1000 + "\nwith score " + game.score )
+            // TODO send score to server
+            //times.forEach((t) => {console.log(t)})
+            buildLeaderBoardPage(game.regionName,game.score);
         }
     }
 
-    const game = new Game(ctx, canvas.width, canvas.height);
-
+    const game = new Game(ctx, ctxBg, canvas.width, canvas.height, regionName, regionDiff);
+    game.currentTime = 0;
     let lastTime = 0;
     animate(0);
 
+
+
     console.log(game);
+
 }

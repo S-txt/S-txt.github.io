@@ -1,14 +1,14 @@
 class Player {
     constructor(game, maxSpeed){
         this.game = game;
-        this.SpriteWidth = 48;
-        this.SpriteHeight = 48;
+        this.SpriteWidth = 128;
+        this.SpriteHeight = 128;
         this.frameX = 0;
         this.frameY = 0;
-        this.maxFrame = 3;
+        this.maxFrame = 4;
         this.width = this.SpriteWidth;
         this.height = this.SpriteHeight;
-        this.scale = 3;
+        this.scale = 1;
         this.x = 10;
         this.y = this.game.bottomMargin - this.height * this.scale ;
         this.speed = 0;

@@ -21,7 +21,7 @@ class Idle extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 0;
-        this.player.maxFrame = 3; // n-1
+        this.player.maxFrame = 4; // n-1
     }
     // tracking to change state
     handleState(game){
@@ -30,6 +30,7 @@ class Idle extends State{
             this.player.setState(states.DEATH)
         }
         // is player get hit
+
         if (this.player.playerHealth.currentHP !== this.player.playerHealth.lastHP){
             this.player.setState(states.HIT)
         }
@@ -49,7 +50,7 @@ class Run extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 1;
-        this.player.maxFrame = 5;
+        this.player.maxFrame = 4;
         this.player.setSpeed(this.player.maxSpeed)
     }
     // tracking to change state
@@ -66,14 +67,12 @@ class Attack extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 2;
-        this.player.maxFrame = 5;
+        this.player.maxFrame = 6;
     }
     // tracking to change state
     handleState(game){
         if (this.player.frameX >= this.player.maxFrame){
             game.lastScore = "perfect "
-            //game.enemies[0].setState(states.HIT)
-
             this.player.setState(states.IDLE)
         }
     }
@@ -108,7 +107,7 @@ class Death extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 4;
-        this.player.maxFrame = 5;
+        this.player.maxFrame = 3;
     }
     // tracking to change state
     handleState(game){
