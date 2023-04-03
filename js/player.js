@@ -1,5 +1,5 @@
 class Player {
-    constructor(game, maxSpeed){
+    constructor(game, maxSpeed, scinId){
         this.game = game;
         this.SpriteWidth = 128;
         this.SpriteHeight = 128;
