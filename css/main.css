@@ -8,6 +8,10 @@
     src: url('../fonts/NineteenEightySeven-MzMJ.ttf') format('truetype');
   }
 
+* {
+  box-sizing: border-box;
+}
+
 
 body {
     font-family: 'PressStart2P', sans-serif;

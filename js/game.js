@@ -13,7 +13,7 @@ const buildBaseGame = () => {
             
         </div>
         
-        <img src=${JSON.parse(localStorage.getItem(localStorage.getItem('currentSkinID'))).src} alt="player" id="player">
+        <img src=${SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku']} alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
@@ -285,17 +285,7 @@ function getScore(game, tile, deltaTime){
 }
 
 const buildGamePage = async (regionName, regionDiff) => {
-    // =======================================
-    localStorage.setItem("1", JSON.stringify(
-        {"name": "Yurei",
-            "src": "./img/yurei.png"}));
-    localStorage.setItem("2", JSON.stringify(
-        {  "name": "Gotoku",
-            "src": "./img/gotoku.png"}));
-    localStorage.setItem("currentSkinID", "1");
-    console.log(JSON.parse(localStorage.getItem(localStorage.getItem('currentSkinID'))))
-    console.log(JSON.parse(localStorage.getItem(localStorage.getItem('currentSkinID'))).src)
-    //======================================
+    
     buildBaseGame();
     const canvas = document.getElementById('canvasGame');
     const ctx = canvas.getContext('2d'); // Alpha channel disabled for better optimization

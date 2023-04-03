@@ -8,10 +8,18 @@ const buildBaseRegions = () => {
 
         <div class="region-section">
             <h1 class="region-main-header">Choose a region!</h1>
+            <button class="region__fighterBtn">Choose a fighter!</button>
             
             <ul class="region-list"></ul>
+            
         </div>
     `
+
+    const fighterBtn = document.querySelector('.region__fighterBtn')
+
+    fighterBtn.addEventListener('click', () => {
+        buildWardtobePage()
+    })
 }
 
 const buildRegions = (regions) => {
@@ -58,45 +66,7 @@ const buildRegions = (regions) => {
 
 const buildRegionPage = () => {
 
-    const regions = [
-        {
-            'name': 'Saitama',
-            'record': '12354',
-            'difficulty': 1,
-        },
-        {
-            'name': 'Chiba',
-            'record': '34234',
-            'difficulty': 2,
-        },
-        {
-            'name': 'Kanagawa',
-            'record': '65344',
-            'difficulty': 3,
-        },
-        {
-            'name': 'Ibaraki',
-            'record': '123',
-            'difficulty': 4,
-        },
-        {
-            'name': 'Tochigi',
-            'record': '4315',
-            'difficulty': 1,
-        },
-        {
-            'name': 'Gunma',
-            'record': '1764',
-            'difficulty': 1,
-        },
-        {
-            'name': 'Yamanashi',
-            'record': '13405',
-            'difficulty': 1,
-        },
-    ]
-
 
     buildBaseRegions();
-    buildRegions(regions)
+    buildRegions(REGIONS)
 }

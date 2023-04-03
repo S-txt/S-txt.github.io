@@ -15,7 +15,7 @@ const buildBaseLeaderBoard = () => {
 
         <ul class="leaderList"></ul>
 
-        <div class="exit-section"><button class="exit">Назад</button></div>
+        <div class="exit-section"><button class="exit">Back</button></div>
 
     </div>
     `

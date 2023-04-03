@@ -1,0 +1,110 @@
+
+
+
+.wardrobe {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+    max-width: 500px;
+    align-items: center;
+}
+
+
+.wardrobe__header {
+    margin-bottom: 50px;
+}
+
+.wardtobe__exit {
+    margin-bottom: 20px;
+}
+
+.wardrobe__icons-list {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    width: 90%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wardrobe__icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20%;
+    box-sizing: border-box;
+    
+    padding: 5%;
+    border-radius: 10%;
+}
+
+.wardrobe__icon-header {
+    margin: 0;
+}
+
+.wardrobe__icon-img {
+    margin-bottom: 20px;
+}
+
+.chosen-icon {
+    border: 1px solid rgb(0, 139, 139);
+}
+
+.wardrobe__icon-img {
+    width: 100px;
+}
+
+.coming-soon {
+    position: relative;
+    /* background-color: rgba(00,00,00,0.8); */
+}
+
+.coming-soon .wardrobe__icon-img {
+    -webkit-filter: blur(7px);
+    filter: blur(7px);
+    opacity: 0.8;
+}
+
+.coming-soon .wardrobe__icon-header {
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    /* opacity: 0.1; */
+}
+
+.coming-soon:before {
+    content: "coming soon";
+    color: rgb(0, 139, 139);
+    position: absolute;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
+
+.buy {
+    position: relative;
+    /* background-color: rgba(00,00,00,0.8); */
+}
+
+.buy:hover {
+    border: 1px solid darkred;
+}
+
+.buy .wardrobe__icon-img {
+    opacity: 0.6;
+}
+
+.buy .wardrobe__icon-header {
+    opacity: 0.6;
+}
+
+.buy:before {
+    content: "buy";
+    color: rgb(200, 0, 0);
+    font-size: 30px;
+    position: absolute;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
