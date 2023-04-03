@@ -1,6 +1,8 @@
 const buildBaseRegions = () => {
     document.title = 'Regions'
 
+    localStorage.removeItem('currentRegion')
+
     document.body.innerHTML = `
         <div class="username"></div>
 
@@ -36,7 +38,10 @@ const buildRegions = (regions) => {
         button.textContent = "START"
         button.setAttribute('name', regions[i].name)
 
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            
+            localStorage.setItem('currentRegion', e.target.name);
+
             buildGamePage();
         });
 

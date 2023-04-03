@@ -2,6 +2,8 @@ const buildBaseGame = () => {
     document.title = 'Game!'
 
     document.body.innerHTML = `
+        <div class="username">${localStorage.getItem('currentRegion')}</div>
+
         <div id="wrapper">
             <canvas id="canvasBG"></canvas>
             <canvas id="canvasGame" style="position: fixed;"></canvas>
@@ -196,7 +198,7 @@ function getScore(game, tile, deltaTime){
 
 }
 
-const buildGamePage = () => {
+const buildGamePage = async () => {
     buildBaseGame();
 
 
@@ -206,7 +208,7 @@ const buildGamePage = () => {
     canvas.height = window.innerHeight;
 
 
-    function animate(timeStamp){
+    async function animate(timeStamp){
         // main animation loop
 
         // fps calculation
@@ -219,6 +221,15 @@ const buildGamePage = () => {
             game.currentTime += deltaTime;
             requestAnimationFrame(animate)
         } else{
+
+            // send game results to the server 
+            await importScore(
+                localStorage.getItem('userId'),
+                localStorage.getItem('currentRegion'),
+                game.score
+            )
+
+
             // game is ended redraw to leaderboard
             buildLeaderBoardPage();
         }
