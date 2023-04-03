@@ -30,6 +30,7 @@ class Idle extends State{
             this.player.setState(states.DEATH)
         }
         // is player get hit
+
         if (this.player.playerHealth.currentHP !== this.player.playerHealth.lastHP){
             this.player.setState(states.HIT)
         }

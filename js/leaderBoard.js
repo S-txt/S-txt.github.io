@@ -140,8 +140,8 @@ const buildLeaderBoard = (arr, myId) => {
     // }
 }
 
-function buildLeaderBoardPage() {
-
+function buildLeaderBoardPage(region, score) {
+    console.log("Played on " + region + " with score: " + score)
     buildBaseLeaderBoard();
     
     const myIdG = 95

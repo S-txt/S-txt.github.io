@@ -3,10 +3,9 @@ class HP {
         this.game = game;
         this.width = this.game.width / 3;
         this.height = 20;
-        this.maxHP = 100;
+        this.maxHP = 30;
         this.currentHP = this.maxHP;
-        this.imuneTimer = 0;
-        this.imuneInterval = 1000;
+        this.lastHP = this.currentHP;
         this.bar = null;
         this.barText = null;
 
