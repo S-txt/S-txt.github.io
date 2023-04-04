@@ -17,7 +17,7 @@ const buildBaseGame = () => {
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
-        <img src="./img/enemy.png" alt="enemy" id="enemy">
+        <img src="./img/Ninja1.png" alt="enemy" id="enemy">
     `
 }
 

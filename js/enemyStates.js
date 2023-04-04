@@ -20,8 +20,8 @@ class EnemyIdle extends EnemyState{
     // action when entering this state
     enter(){
         this.enemy.frameX = 0;
-        this.enemy.frameY = 3;
-        this.enemy.maxFrame = 3;
+        this.enemy.frameY = 0;
+        this.enemy.maxFrame = 6;
         this.enemy.setSpeed(0);
     }
     // tracking to change state
@@ -37,8 +37,8 @@ class EnemyRun extends EnemyState{
     // action when entering this state
     enter(){
         this.enemy.frameX = 0;
-        this.enemy.frameY = 4;
-        this.enemy.maxFrame = 3;
+        this.enemy.frameY = 1;
+        this.enemy.maxFrame = 6;
         this.enemy.setSpeed(this.enemy.maxSpeed)
     }
     // tracking to change state
@@ -63,8 +63,8 @@ class EnemyAttack extends EnemyState{
     // action when entering this state
     enter(){
         this.enemy.frameX = 0;
-        this.enemy.frameY = 3;
-        this.enemy.maxFrame = 3;
+        this.enemy.frameY = 2;
+        this.enemy.maxFrame = 5;
     }
     // tracking to change state
     handleState(){
@@ -78,8 +78,8 @@ class EnemyHit extends EnemyState{
     // we have not this state, just blinking
     enter(){
         this.enemy.frameX = 0;
-        this.enemy.frameY = 2;
-        this.enemy.maxFrame = 1;
+        this.enemy.frameY = 3;
+        this.enemy.maxFrame = 3;
         this.enemy.setSpeed(0);
     }
     // tracking to change state
@@ -97,7 +97,7 @@ class EnemyDeath extends EnemyState{
     // we have not this state, just blinking
     enter(){
         this.enemy.frameX = 0;
-        this.enemy.frameY = 1;
+        this.enemy.frameY = 4;
         this.enemy.maxFrame = 4;
         this.enemy.setSpeed(0);
     }
