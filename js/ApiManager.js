@@ -1,19 +1,19 @@
 const getCurrentUser = async () => {
     const params = new URL(document.location).searchParams;
 
-    return await fetch(`https://130.193.50.12:7000/get_user/${params.get('id')}`)
+    return await fetch(`https://krecker.me/get_user/${params.get('id')}`)
     .then(res => res.json())
     .catch(err => console.log(err))
 }
 
 const getTotalScore = async () => {
-    return await fetch(`https://130.193.50.12:7000/get_total_score`)
+    return await fetch(`https://krecker.me/get_total_score`)
     .then(res => res.json())
     .catch(err => console.log(err))
 }
 
 const getLocationScore = async name => {
-    return await fetch(`https://130.193.50.12:7000/get_location_score/${name}`)
+    return await fetch(`https://krecker.me/get_location_score/${name}`)
     .then(res => res.json())
     .catch(err => console.log(err))
 }
@@ -27,7 +27,7 @@ const importScore = async (userId, regionName, score) => {
         "date_time": get_datetime()
     }
     
-    return await fetch(`https://130.193.50.12:7000/import_score`, {
+    return await fetch(`https://krecker.me/import_score`, {
         method: "POST",
         mode: "cors",
         headers: {
