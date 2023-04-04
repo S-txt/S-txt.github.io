@@ -21,7 +21,7 @@ class Idle extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 0;
-        this.player.maxFrame = 4; // n-1
+        this.player.maxFrame = this.player.frames[0]; // n-1
     }
     // tracking to change state
     handleState(game){
@@ -50,7 +50,7 @@ class Run extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 1;
-        this.player.maxFrame = 4;
+        this.player.maxFrame = this.player.frames[1];
         this.player.setSpeed(this.player.maxSpeed)
     }
     // tracking to change state
@@ -67,7 +67,7 @@ class Attack extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 2;
-        this.player.maxFrame = 6;
+        this.player.maxFrame = this.player.frames[2];
     }
     // tracking to change state
     handleState(game){
@@ -86,7 +86,7 @@ class Hit extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 3;
-        this.player.maxFrame = 2;
+        this.player.maxFrame = this.player.frames[3];
     }
     // tracking to change state
     handleState(game){
@@ -107,7 +107,7 @@ class Death extends State{
     enter(){
         this.player.frameX = 0;
         this.player.frameY = 4;
-        this.player.maxFrame = 3;
+        this.player.maxFrame = this.player.frames[4];
     }
     // tracking to change state
     handleState(game){

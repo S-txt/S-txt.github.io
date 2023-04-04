@@ -13,7 +13,7 @@ const buildBaseGame = () => {
             
         </div>
         
-        <img src=${SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku']} alt="player" id="player">
+        <img src=${SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku'].src} alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
@@ -100,7 +100,7 @@ class Game {
 
     }
     drawBg(){
-        console.log("generate BG");
+        //console.log("generate BG");
         this.ctxBg.fillStyle = "red";
         this.ctxBg.clearRect(0,0,this.width,this.height);
         if (this.streetBg.complete) {
@@ -338,6 +338,6 @@ const buildGamePage = async (regionName, regionDiff) => {
 
 
 
-    console.log(game);
+    //console.log(game);
 
 }

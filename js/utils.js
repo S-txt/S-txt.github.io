@@ -1,6 +1,6 @@
 const SKINS = {
-    "Gotoku": "./img/gotoku.png",
-    "Yurei": "./img/yurei.png"
+    "Gotoku": {"src" : "./img/gotoku.png", "frames":[4,6,3,2,4]},
+    "Yurei": {"src" : "./img/yurei.png", "frames":[4,4,6,2,3]}
 }
 
 function get_datetime() {
