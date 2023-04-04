@@ -44,3 +44,32 @@ const getLocations = async () => {
     .then(res => res.json())
     .catch(err => console.log(err))
 }
+
+const getWallet = async () => {
+    const tonId = localStorage.getItem('tonPlayId')
+
+    return await fetch(`https://external.api.tonplay.io/x/auth/v1/user/${tonId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Tonplay": "5JlMHQbOve:gZRAAgbAUJo6c8WGfRkI"
+        }
+    })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
+
+const getAssets = async () => {
+    const walletId = localStorage.getItem('walletId')
+    
+    return await fetch(`https://external.api.tonplay.io/x/tondata/v2/assets/:${walletId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Tonplay": "5JlMHQbOve:gZRAAgbAUJo6c8WGfRkI"
+        }
+    })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
