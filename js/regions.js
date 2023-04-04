@@ -22,7 +22,7 @@ const buildBaseRegions = () => {
     })
 }
 
-const buildRegions = (regions) => {
+const buildRegions = async (regions) => {
     const regionList = document.querySelector('.region-list')
     
     for (let i=0; i < regions.length; i++) {
@@ -35,11 +35,11 @@ const buildRegions = (regions) => {
 
         liElement.appendChild(header)
 
-        const record = document.createElement('p')
-        record.classList.add('region-record')
-        record.textContent = regions[i].record
+        // const record = document.createElement('p')
+        // record.classList.add('region-record')
+        // record.textContent = regions[i].record
 
-        liElement.appendChild(record)
+        // liElement.appendChild(record)
 
         const button = document.createElement('button')
         button.classList.add('region-start')
@@ -64,9 +64,11 @@ const buildRegions = (regions) => {
     }
 } 
 
-const buildRegionPage = () => {
+const buildRegionPage = async () => {
+
+    const regions = await getLocations()
 
 
     buildBaseRegions();
-    buildRegions(REGIONS)
+    buildRegions(regions)
 }
