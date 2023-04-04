@@ -4,7 +4,7 @@ window.addEventListener('load', async () => {
 
     localStorage.setItem('userId', currentUser.telegram_id);
 
-    buildRegionPage();
+    await buildRegionPage();
 
     document.querySelector('.username').textContent = currentUser.username
 

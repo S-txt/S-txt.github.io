@@ -38,3 +38,9 @@ const importScore = async (userId, regionName, score) => {
     .then(res => res.json())
     .catch(err => console.log(err));
 };
+
+const getLocations = async () => {
+    return await fetch(`https://krecker.me:7000/get_all_locations`)
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
