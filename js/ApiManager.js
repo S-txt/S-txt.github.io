@@ -1,7 +1,7 @@
 const getCurrentUser = async () => {
     const params = new URL(document.location).searchParams;
 
-    return await fetch(`https://krecker.me:7000/get_user/${params.get('id')}`)
+    return await fetch(`https://krecker.me:7000/get_user/${params.get('telegram_id')}`)
     .then(res => res.json())
     .catch(err => console.log(err))
 }
