@@ -21,6 +21,7 @@ class Player {
 
         this.playerHealth = new HP(this.game);
         this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this), new Death(this)];
+        this.frames = []
         this.currentState = this.states[0];
         this.currentState.enter()
 

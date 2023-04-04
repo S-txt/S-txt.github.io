@@ -2,7 +2,7 @@ window.addEventListener('load', async () => {
 
     const currentUser = await getCurrentUser()
 
-    localStorage.setItem('userId', currentUser.telegram_id);
+    //localStorage.setItem('userId', currentUser.telegram_id);
 
     const params = new URL(document.location).searchParams;
 

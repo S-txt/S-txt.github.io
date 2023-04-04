@@ -1,11 +1,11 @@
 class Enemy {
     constructor(game, position, maxSpeed) {
         this.game = game;
-        this.SpriteWidth = 87;
-        this.SpriteHeight = 87;
+        this.SpriteWidth = 128;
+        this.SpriteHeight = 128;
         this.frameX = 0;
-        this.frameY = 4;
-        this.maxFrame = 3;
+        this.frameY = 0;
+        this.maxFrame = 6;
         this.width = this.SpriteWidth;
         this.height = this.SpriteHeight;
         this.x = Math.abs(position);
