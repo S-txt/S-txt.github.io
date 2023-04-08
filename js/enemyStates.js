@@ -65,9 +65,13 @@ class EnemyAttack extends EnemyState{
         this.enemy.frameX = 0;
         this.enemy.frameY = 2;
         this.enemy.maxFrame = 5;
+        this.enemy.setSpeed(0);
     }
     // tracking to change state
     handleState(){
+        if (this.enemy.frameX >= this.enemy.maxFrame){
+            this.enemy.setState(enemyStates.HIT)
+        }
     }
 }
 class EnemyHit extends EnemyState{
