@@ -13,7 +13,7 @@ const buildBaseGame = () => {
             
         </div>
         
-        <img src=${SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku']} alt="player" id="player">
+        <img src=${SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku'].src} alt="player" id="player">
         <img src="./img/tile.png" alt="tile" id="tile">
         <img src="./img/street.jpg" alt="street" id="street">
         <img src="./img/road.png" alt="road" id="road">
@@ -33,7 +33,7 @@ class Game {
         this.difficultyModifier = 1.1 + (this.regionDiff * 0.05);
 
         this.bottomMargin = this.height * 0.3;
-        this.checkLine = this.height - this.width * 0.25;
+        this.checkLine = this.height - this.width * 0.25 - this.width * 0.16 ;
         this.startline = this.bottomMargin;
 
         // speed params
@@ -95,12 +95,12 @@ class Game {
 
         this.setUI()
         this.pauseGame()
-        //this.animationObserver()
+        this.animationObserver()
 
 
     }
     drawBg(){
-        console.log("generate BG");
+        //console.log("generate BG");
         this.ctxBg.fillStyle = "red";
         this.ctxBg.clearRect(0,0,this.width,this.height);
         if (this.streetBg.complete) {
@@ -112,16 +112,39 @@ class Game {
         }
         if (this.roadBg.complete) {
             this.ctxBg.drawImage(this.roadBg, 0, this.bottomMargin, this.width, this.height - this.bottomMargin)
+            this.drawCircle()
         } else {
             this.roadBg.onload = (e) => {
                 this.ctxBg.drawImage(this.roadBg, 0, this.bottomMargin, this.width, this.height - this.bottomMargin)
+                this.drawCircle()
             };
         }
 
 
 
 
+
+
     }
+
+    drawCircle(){
+        this.ctxBg.beginPath();
+        this.ctxBg.lineWidth = 3;
+        this.ctxBg.strokeStyle = 'lightgrey';
+        // пишем костыль
+        this.ctxBg.arc(0*this.width*0.25 + this.width*0.125, this.checkLine+this.width*0.125+this.width * 0.16, this.width*0.12, 0, 2 * Math.PI, false);
+        this.ctxBg.stroke();
+        this.ctxBg.beginPath();
+        this.ctxBg.arc(1*this.width*0.25 + this.width*0.125, this.checkLine+this.width*0.125+this.width * 0.16, this.width*0.12, 0, 2 * Math.PI, false);
+        this.ctxBg.stroke();
+        this.ctxBg.beginPath();
+        this.ctxBg.arc(2*this.width*0.25 + this.width*0.125, this.checkLine+this.width*0.125+this.width * 0.16, this.width*0.12, 0, 2 * Math.PI, false);
+        this.ctxBg.stroke();
+        this.ctxBg.beginPath();
+        this.ctxBg.arc(3*this.width*0.25 + this.width*0.125, this.checkLine+this.width*0.125+this.width * 0.16, this.width*0.12, 0, 2 * Math.PI, false);
+        this.ctxBg.stroke();
+    }
+
     animationObserver(){
         // Select the node that will be observed for mutations
         const targetNode = document.getElementsByClassName("scoreGrade")[0];
@@ -141,10 +164,10 @@ class Game {
             characterData: false});
 
     }
+
     render(context, deltaTime){
         //this.drawBg()
         //console.log("play: "+ this.playTime + "\ndelta: " + deltaTime  )
-        // TODO predraw bg
 
         //check pause game
         if (this.gamePaused) return
@@ -163,8 +186,8 @@ class Game {
         this.player.draw(context);
         this.player.update(deltaTime);
 
-        context.fillRect(0, this.checkLine,this.width, 3)
-
+        //context.fillRect(0, this.checkLine,this.width, 3)
+        //
         this.timeEl.textContent = Math.floor(this.playTime * 0.001);
 
     }
@@ -270,7 +293,7 @@ function getScore(game, tile, deltaTime){
     if (game.touchY >= game.checkLine &&tile.x <= game.touchX &&
         game.touchX <= tile.x + tile.width &&
         game.touchY - tile.y <= tile.height){
-        if (game.checkLine - 50 <= game.touchY){
+        if (game.checkLine <= game.touchY){
             game.deltaScore = 50
             game.lastScore = "perfect"
             game.score += game.deltaScore
@@ -338,6 +361,6 @@ const buildGamePage = async (regionName, regionDiff) => {
 
 
 
-    console.log(game);
+    //console.log(game);
 
 }

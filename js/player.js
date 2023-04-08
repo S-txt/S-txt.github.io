@@ -5,7 +5,8 @@ class Player {
         this.SpriteHeight = 128;
         this.frameX = 0;
         this.frameY = 0;
-        this.maxFrame = 4;
+        this.frames = SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku'].frames
+        this.maxFrame = this.frames[0];
         this.width = this.SpriteWidth;
         this.height = this.SpriteHeight;
         this.scale = 1;
@@ -21,7 +22,7 @@ class Player {
 
         this.playerHealth = new HP(this.game);
         this.states = [new Idle(this), new Run(this), new Attack(this), new Hit(this), new Death(this)];
-        this.frames = []
+        this.frames = SKINS[localStorage.getItem('currentSkin') ? localStorage.getItem('currentSkin') : 'Gotoku'].frames
         this.currentState = this.states[0];
         this.currentState.enter()
 

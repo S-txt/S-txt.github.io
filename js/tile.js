@@ -34,7 +34,7 @@ class Tile{
         this.y += this.speed;
         this.endTime += deltaTime
         // tile is out of bound
-        if (this.y > this.game.width + this.game.bottomMargin + this.width + 5){
+        if (this.y > this.game.width + this.game.bottomMargin + this.width + 10){
             this.markedForDelition = true;
             this.game.lastScore = "miss";
             this.game.player.hit()
