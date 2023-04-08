@@ -20,6 +20,11 @@
     margin: 0 auto;
 }
 
+.leader-name {
+    max-width: 60%;
+    overflow: hidden;
+}
+
 .leader-me {
     font-size: 24px;
 }

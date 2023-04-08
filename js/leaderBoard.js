@@ -64,7 +64,7 @@ const buildLeaderBoard = (arr, myId) => {
         leaderList.appendChild(liElement);
     }
 
-    if (myId > 8) {
+    if (myId > 10) {
 
         let liElement = document.createElement('li')
         liElement.className = 'leaderItem'
@@ -74,13 +74,13 @@ const buildLeaderBoard = (arr, myId) => {
         liElement.appendChild(points)
         leaderList.appendChild(liElement);
 
-        for (let i = myId - 2; i<(myId - 2 < arr.length || myId - 1 < arr.length ? myId + 2: arr.length); i++){
+        for (let i = myId - 3; i<(myId - 2 < arr.length || myId - 1 < arr.length ? myId + 2: arr.length); i++){
             let liElement = document.createElement('li')
             liElement.className = 'leaderItem'
     
             let leaderNum = document.createElement('span')
             leaderNum.className = 'leader-num'
-            leaderNum.textContent = i
+            leaderNum.textContent = arr[i].rank
     
             let leaderName = document.createElement('span')
             leaderName.className = 'leader-name'
