@@ -17,6 +17,7 @@ const buildBaseLeaderBoard = () => {
 
         <div class="exit-section"><button class="exit">Back</button></div>
 
+        <div class="exit-section tg_logo"><button class="exit tg_logo_btn">go to </button></div>
     </div>
     `
     
@@ -28,6 +29,10 @@ const buildBaseLeaderBoard = () => {
     exitBtn.addEventListener('click', () => {
         buildRegionPage()
     });
+
+    document.querySelector('.tg_logo_btn').addEventListener('click', ()  =>  window.location.href = 'https://t.me/BandBeat')
+
+    
 }
 
 const buildLeaderBoard = (arr, myId) => {
