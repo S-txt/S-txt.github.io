@@ -61,7 +61,7 @@ const buildWardtobePage = async () => {
 
     document.querySelectorAll('.wardrobe__icon').forEach((el) => {
         if(el.classList.contains('buy')) {
-            el.addEventListener('click', () => window.location.href = 'https://tonplay.io/')
+            el.addEventListener('click', () => window.location.href = 'https://tonplay.io/games/5JlMHQbOve?draft=true')
         }
 
         if(!el.classList.contains('buy') && !el.classList.contains('coming-soon')) {
