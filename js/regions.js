@@ -3,23 +3,19 @@ const buildBaseRegions = () => {
 
     localStorage.removeItem('currentRegion')
 
-    document.body.innerHTML = `
-        <div class="username"></div>
+    if (document.querySelector('.wardrobe')) {
+        document.querySelector('.wardrobe').remove()
+    }
 
-        <div class="region-section">
-            <h1 class="region-main-header">Choose a region!</h1>
-            <button class="region__fighterBtn">Choose a fighter!</button>
+    const regions = document.createElement('div')
+    regions.classList.add('region-section')
+    regions.innerHTML = `
+        <h1 class="region-main-header">Choose a region!</h1>
             
-            <ul class="region-list"></ul>
-            
-        </div>
+        <ul class="region-list"></ul>
     `
 
-    const fighterBtn = document.querySelector('.region__fighterBtn')
-
-    fighterBtn.addEventListener('click', () => {
-        buildWardtobePage()
-    })
+    document.querySelector('.main-section').prepend(regions)
 }
 
 const buildRegions = async (regions) => {

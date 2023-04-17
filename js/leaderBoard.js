@@ -27,7 +27,7 @@ const buildBaseLeaderBoard = () => {
     const exitBtn = document.querySelector('.exit')
 
     exitBtn.addEventListener('click', () => {
-        buildRegionPage()
+        buildMainPage()
     });
 
     document.querySelector('.tg_logo_btn').addEventListener('click', ()  =>  window.location.href = 'https://t.me/BandBeat')

@@ -33,3 +33,40 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+.region-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 15px;
+  text-align: center;
+  max-width: 1080px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(1px);
+}
+
+
+.switcher {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  width: 90%;
+  align-items: center;
+  text-align: center;
+  /* bottom: 30px;/ */
+  max-width: 1000px;
+}
+
+.switcher label {
+  padding: 2vw 2.5vw;
+  font-size: min(2vw, 20px);
+}
