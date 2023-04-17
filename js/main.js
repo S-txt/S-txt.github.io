@@ -1,4 +1,4 @@
-const buildMainBase = () => {
+const buildMainBase = async () => {
     const footer = `
     <div class="footer">
         <div class="btn-group switcher">
@@ -21,18 +21,26 @@ const buildMainBase = () => {
     document.body.innerHTML = content
 }
 
-const buildMainPage = () => {
-    buildMainBase();
+const buildMainPage = async () => {
+    await buildMainBase();
+
+    document.title = 'Regions'
+    await buildRegionPage();
+    document.querySelector('.region-section').style.display = 'flex'
+    
+    await buildWardtobePage();
 
     document.getElementById('fighterBtn').addEventListener('click', () => {
-        buildWardtobePage();
+        document.title = 'Wardrobe'
+        document.querySelector('.region-section').style.display = 'none'
+        document.querySelector('.wardrobe').style.display = 'flex'
     });
     
     document.getElementById('regionBtn').addEventListener('click', () => {
-        buildRegionPage()
+        document.title = 'Regions'
+        document.querySelector('.wardrobe').style.display = 'none'
+        document.querySelector('.region-section').style.display = 'flex'
     });
-
-    buildRegionPage();
 }
 
 

@@ -20,9 +20,6 @@ const buildBaseLeaderBoard = () => {
         <div class="exit-section tg_logo"><button class="exit tg_logo_btn">go to </button></div>
     </div>
     `
-    
-    // <input type="radio" class="stv-radio-button" name="radiobuttonTest" id="button3" value="3">
-    // <label for="button3" id="friendsButton">friends</label>
         
     const exitBtn = document.querySelector('.exit')
 

@@ -1,10 +1,4 @@
 const buildBaseWardrobe = () => {
-    document.title = 'Wardrobe'
-
-    if (document.querySelector('.region-section')) {
-        document.querySelector('.region-section').remove()
-    }
-
     const wardrobe = document.createElement('div')
     wardrobe.classList.add('wardrobe')
     wardrobe.innerHTML = `

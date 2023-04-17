@@ -1,11 +1,5 @@
 const buildBaseRegions = () => {
-    document.title = 'Regions'
-
     localStorage.removeItem('currentRegion')
-
-    if (document.querySelector('.wardrobe')) {
-        document.querySelector('.wardrobe').remove()
-    }
 
     const regions = document.createElement('div')
     regions.classList.add('region-section')
