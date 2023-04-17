@@ -1,4 +1,4 @@
-const buildMainBase = async () => {
+const buildMainBase = () => {
     const footer = `
     <div class="footer">
         <div class="btn-group switcher">
@@ -21,8 +21,8 @@ const buildMainBase = async () => {
     document.body.innerHTML = content
 }
 
-const buildMainPage = async () => {
-    await buildMainBase();
+const buildMainPage = () => {
+    buildMainBase();
 
     document.getElementById('fighterBtn').addEventListener('click', () => {
         buildWardtobePage();
@@ -38,8 +38,7 @@ const buildMainPage = async () => {
 
 
 window.addEventListener('load', async () => {
-
-    await buildMainPage()
+    buildMainPage()
 
     const currentUser = await getCurrentUser()
 
@@ -53,7 +52,7 @@ window.addEventListener('load', async () => {
 
     console.log(currentUser.telegram_id, currentUser.username)
 
-    const wallet = await getWallet()
+    const wallet = getWallet()
 
     console.log(wallet);
 
